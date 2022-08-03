@@ -1,0 +1,3 @@
+[submodule "raw/concepticon-data"]
+	path = raw/concepticon-data
+	url = https://github.com/concepticon/concepticon-data

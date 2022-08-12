@@ -1,0 +1,15 @@
+ID,Description,Inverse_ID
+broader,Broader than x.,narrower
+narrower,Narrower than x.,broader
+isa,Category superordinate to x.,instanceof
+instanceof,Subcategory of x.,isa
+haspart,A whole that x is a part of.,partof
+partof,A part of x.,haspart
+transitiveof,"The same action as x, but involving an object different from the subject.",intransitiveof
+intransitiveof,"The same action as x, but not involving an object different from the subject.",transitiveof
+antonymof,The opposite of x.,
+similar,Having almost but not quite the same meaning as x.,
+hasform,The oblique case form of x.,
+resultsin,Results in x.,
+producedby,Is produced by x.,
+requires,Requires x.,

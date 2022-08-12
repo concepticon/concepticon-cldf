@@ -9,7 +9,7 @@ import collections
 from cldfbench import Dataset as BaseDataset, CLDFSpec
 from pycldf.sources import Sources
 from clldutils.markup import MarkdownLink
-from clldutils.jsonlib import load
+from clldutils.jsonlib import load, dump
 from pyconcepticon import Concepticon
 from pyconcepticon.models import Languoid
 from rfc3986 import URIReference
@@ -42,17 +42,25 @@ class Dataset(BaseDataset):
             'git -C {} pull --recurse-submodules'.format(self.dir.resolve()), shell=True)
 
     def schema(self, cldf, api):
-        cldf.add_component('LanguageTable')
+        t = cldf.add_component('LanguageTable')
+        t.common_props['dc:description'] = \
+            "Languages listed here are languages in which a concept list provides concept labels;" \
+            " typically major scientific languages or major languages from the region in which " \
+            "lexical data was collected."
         cldf.add_columns(
             'ParameterTable',
             {
                 "name": "Semantic_Field",
+                "dc:desription": "A categorization of concept sets into the semantic fields defined"
+                                 " in the Intercontinental Dictionary Series (IDS).",
                 "datatype": {
                     "base": "string",
                     "format": "|".join(re.escape(s) for s in api.vocabularies['SEMANTICFIELD'])}
             },
             {
                 "name": "Ontological_Category",
+                "dc:description": "A rough ontological categorization to be used for navigating "
+                                  "and filtering concept sets.",
                 "datatype": {
                     "base": "string",
                     "format": "|".join(
@@ -65,6 +73,9 @@ class Dataset(BaseDataset):
                 "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#parameterReference"
             }
         )
+        cldf['ParameterTable'].common_props['dc:description'] = \
+            "The Concepticon - i.e. the list of concept sets to which individual concepts given " \
+            "in concept lists are mapped."
         t = cldf.add_table(
             'relationtypes.csv',
             {
@@ -146,7 +157,8 @@ class Dataset(BaseDataset):
             }
         )
         cldf['FormTable'].common_props['dc:description'] = \
-            "Gloss labels in particular languages given for concepts in a conceptlist"
+            "Glosses (aka concept labels) in particular languages given for concepts in a " \
+            "concept list"
         cldf.add_table(
             'concepts.csv',
             {
@@ -351,3 +363,7 @@ class Dataset(BaseDataset):
                     Comment=ret['comment'],
                     Replacement_ID=ret['replacement'],
                 ))
+        zenodo = load(cdata / '.zenodo.json')
+        zenodo['keywords'].append('cldf:Wordlist')
+        zenodo['title'] = '{} as CLDF dataset'.format(zenodo['title'])
+        dump(zenodo, self.dir / '.zenodo.json', indent=2)

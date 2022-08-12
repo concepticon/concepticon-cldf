@@ -10,7 +10,7 @@
         "dc:references": "CONTRIBUTORS.md",
         "dc:format": "text/markdown"
     },
-    "dc:description": "A Resource for the Linking of Concept Lists",
+    "dc:description": "List, Johann-Mattis and Cysouw, Michael and Forkel, Robert. 2016. Concepticon. A resource for the linking of concept lists. In Chair), Nicoletta Calzolari (Conference and Choukri, Khalid and Declerck, Thierry and Grobelnik, Marko and Maegaard, Bente and Mariani, Joseph and Moreno, Asuncion and Odijk, Jan and Piperidis, Stelios (eds.), Proceedings of the Tenth International Conference on Language Resources and Evaluation, 2393-2400. European Language Resources Association (ELRA).",
     "dc:license": {
         "url": "https://creativecommons.org/licenses/by/4.0/",
         "icon": "cc-by.png",
@@ -29,7 +29,7 @@
         {
             "rdf:about": "https://github.com/concepticon/concepticon-cldf",
             "rdf:type": "prov:Entity",
-            "dc:created": "2f5bf39",
+            "dc:created": "6113fde",
             "dc:title": "Repository"
         },
         {
@@ -95,20 +95,6 @@
                         "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#form",
                         "required": true,
                         "name": "Form"
-                    },
-                    {
-                        "dc:extent": "multivalued",
-                        "datatype": "string",
-                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#segments",
-                        "required": false,
-                        "separator": " ",
-                        "name": "Segments"
-                    },
-                    {
-                        "datatype": "string",
-                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#comment",
-                        "required": false,
-                        "name": "Comment"
                     },
                     {
                         "datatype": "string",
@@ -179,19 +165,21 @@
                         "name": "ID"
                     },
                     {
+                        "dc:description": "A rough gloss for a concept set, serving as convenient abbreviation of its definition.",
                         "datatype": "string",
                         "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#name",
                         "required": false,
                         "name": "Name"
                     },
                     {
+                        "dc:description": "A definition of the unifying aspect of the concepts grouped in the concept set.",
                         "datatype": "string",
                         "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#description",
                         "required": false,
                         "name": "Description"
                     },
                     {
-                        "dc:desription": "A categorization of concept sets into the semantic fields defined in the Intercontinental Dictionary Series (IDS).",
+                        "dc:description": "A categorization of concept sets into the semantic fields defined in the Intercontinental Dictionary Series (IDS).",
                         "datatype": {
                             "base": "string",
                             "format": "Agriculture\\ and\\ vegetation|Animals|Basic\\ actions\\ and\\ technology|Clothing\\ and\\ grooming|Cognition|Emotions\\ and\\ values|Food\\ and\\ drink|Kinship|Law|Miscellaneous\\ function\\ words|Modern\\ world|Motion|Possession|Quantity|Religion\\ and\\ belief|Sense\\ perception|Social\\ and\\ political\\ relations|Spatial\\ relations|Speech\\ and\\ language|The\\ body|The\\ house|The\\ physical\\ world|Time|Warfare\\ and\\ hunting"
@@ -599,6 +587,7 @@
             "url": "media.csv"
         },
         {
+            "dc:description": "This table lists concepts as they appear in published concept lists. Each concept is linked to a concept list and a concept set (possibly the <NA> set).",
             "dc:extent": 115181,
             "tableSchema": {
                 "columns": [

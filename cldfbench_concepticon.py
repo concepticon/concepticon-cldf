@@ -7,7 +7,7 @@ import subprocess
 import collections
 
 from cldfbench import Dataset as BaseDataset, CLDFSpec
-from pycldf.sources import Sources
+from pycldf.sources import Sources, Source
 from clldutils.markup import MarkdownLink
 from clldutils.jsonlib import load, dump
 from pyconcepticon import Concepticon
@@ -51,7 +51,7 @@ class Dataset(BaseDataset):
             'ParameterTable',
             {
                 "name": "Semantic_Field",
-                "dc:desription": "A categorization of concept sets into the semantic fields defined"
+                "dc:description": "A categorization of concept sets into the semantic fields defined"
                                  " in the Intercontinental Dictionary Series (IDS).",
                 "datatype": {
                     "base": "string",
@@ -73,6 +73,10 @@ class Dataset(BaseDataset):
                 "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#parameterReference"
             }
         )
+        cldf['ParameterTable', 'Name'].common_props['dc:description'] = \
+            "A rough gloss for a concept set, serving as convenient abbreviation of its definition."
+        cldf['ParameterTable', 'Description'].common_props['dc:description'] = \
+            "A definition of the unifying aspect of the concepts grouped in the concept set."
         cldf['ParameterTable'].common_props['dc:description'] = \
             "The Concepticon - i.e. the list of concept sets to which individual concepts given " \
             "in concept lists are mapped."
@@ -156,10 +160,11 @@ class Dataset(BaseDataset):
                                   "language specific gloss.",
             }
         )
+        cldf.remove_columns('FormTable', 'Segments', 'Comment')
         cldf['FormTable'].common_props['dc:description'] = \
             "Glosses (aka concept labels) in particular languages given for concepts in a " \
             "concept list"
-        cldf.add_table(
+        t = cldf.add_table(
             'concepts.csv',
             {
                 "name": "ID",
@@ -181,6 +186,9 @@ class Dataset(BaseDataset):
                 "name": "Attributes",
                 "datatype": "json"},
         )
+        t.common_props['dc:description'] = \
+            "This table lists concepts as they appear in published concept lists. Each " \
+            "concept is linked to a concept list and a concept set (possibly the <NA> set)."
         cldf.add_foreign_key('FormTable', 'Concept_ID', 'concepts.csv', 'ID')
         cldf.add_table(
             'tags.csv',
@@ -209,9 +217,14 @@ class Dataset(BaseDataset):
         api = Concepticon(cdata)
         self.schema(args.writer.cldf, api)
 
+        args.writer.cldf.sources = Sources.from_file(api.bibfile)
         args.writer.cldf.properties.update({
             k: v for k, v in load(cdata / 'metadata.json').items()
             if not k.startswith('@')})
+        src = args.writer.cldf.sources['List2016a']
+        src = Source(src.genre.lower(), src.id, **{k.lower(): v for k, v in src.items()})
+        args.writer.cldf.properties['dc:description'] = str(src)
+        args.writer.cldf.properties['dc:relation'] = src['url']
 
         shutil.copy(cdata / 'CONTRIBUTORS.md', self.cldf_dir)
         args.writer.cldf.properties['dc:contributor'] = {
@@ -243,7 +256,6 @@ class Dataset(BaseDataset):
         for k, v in api.vocabularies['TAGS'].items():
             args.writer.objects['tags.csv'].append(dict(ID=k, Description=v))
 
-        args.writer.cldf.sources = Sources.from_file(api.bibfile)
         for ref in api.sources:
             args.writer.objects['MediaTable'].append(dict(
                 ID=ref,
@@ -321,7 +333,7 @@ class Dataset(BaseDataset):
                 Alias=cl.alias,
             ))
 
-            for i, c in enumerate(cl.concepts.values(), start=1):
+            for i, c in enumerate(sorted(cl.concepts.values(), key=lambda cl: cl.id), start=1):
                 data = collections.OrderedDict(
                     [(k, v) for k, v in c.attributes.items() if v is not None])
                 forms = {'english': c.english} if c.english and 'english' in slangs else {}

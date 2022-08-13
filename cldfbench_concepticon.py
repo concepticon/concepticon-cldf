@@ -12,6 +12,7 @@ from clldutils.markup import MarkdownLink
 from clldutils.jsonlib import load, dump
 from pyconcepticon import Concepticon
 from pyconcepticon.models import Languoid
+from pybtex.database import parse_string
 from rfc3986 import URIReference
 
 # FIXME: The following should probably go into Glottolog.
@@ -217,12 +218,15 @@ class Dataset(BaseDataset):
         api = Concepticon(cdata)
         self.schema(args.writer.cldf, api)
 
-        args.writer.cldf.sources = Sources.from_file(api.bibfile)
+        for key, entry in parse_string(api.bibfile.read_text(encoding='utf8'), 'bibtex').entries.items():
+            src = Source.from_entry(key, entry)
+            src = Source(src.genre.lower(), src.id, **{k.lower(): v for k, v in src.items()})
+            args.writer.cldf.sources.add(src)
+
         args.writer.cldf.properties.update({
             k: v for k, v in load(cdata / 'metadata.json').items()
             if not k.startswith('@')})
         src = args.writer.cldf.sources['List2016a']
-        src = Source(src.genre.lower(), src.id, **{k.lower(): v for k, v in src.items()})
         args.writer.cldf.properties['dc:description'] = str(src)
         args.writer.cldf.properties['dc:relation'] = src['url']
 

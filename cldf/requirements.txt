@@ -4,7 +4,7 @@ bs4==0.0.1
 certifi==2019.11.28
 chardet==3.0.4
 cldfbench==1.12.0
--e git+https://github.com/concepticon/concepticon-cldf@6113fdee3b5ef515aa88994734bb7f706361d394#egg=cldfbench_concepticon
+-e git+https://github.com/concepticon/concepticon-cldf@c9752ca4e0058b1ca571a8d69d37735a75082dd7#egg=cldfbench_concepticon
 -e git+https://github.com/concepticon/norare-cldf@7981607c5615b527f6d80a47b3dd5b3f24ed5c08#egg=cldfbench_norare
 cldfcatalog==1.5.1
 cldfzenodo==0.2.0

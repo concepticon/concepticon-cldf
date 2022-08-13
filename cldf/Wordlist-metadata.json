@@ -22,6 +22,7 @@
         "http://xmlns.com/foaf/0.1/homepage": "https://www.eva.mpg.de",
         "http://xmlns.com/foaf/0.1/mbox": "concepticon@eva.mpg.de"
     },
+    "dc:relation": "http://www.lrec-conf.org/proceedings/lrec2016/summaries/127.html",
     "dc:source": "sources.bib",
     "dc:title": "Concepticon",
     "dcat:accessURL": "https://concepticon.clld.org",
@@ -29,7 +30,7 @@
         {
             "rdf:about": "https://github.com/concepticon/concepticon-cldf",
             "rdf:type": "prov:Entity",
-            "dc:created": "6113fde",
+            "dc:created": "c9752ca",
             "dc:title": "Repository"
         },
         {

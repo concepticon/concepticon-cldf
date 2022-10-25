@@ -15,6 +15,7 @@ setup(
         ]
     },
     install_requires=[
+        'csvw>=3.1.2',
         'cldfbench',
     ],
     extras_require={

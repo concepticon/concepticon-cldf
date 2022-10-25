@@ -30,7 +30,7 @@
         {
             "rdf:about": "https://github.com/concepticon/concepticon-cldf",
             "rdf:type": "prov:Entity",
-            "dc:created": "ed65aeb",
+            "dc:created": "56e2f01",
             "dc:title": "Repository"
         },
         {
@@ -42,7 +42,7 @@
         {
             "rdf:about": "https://github.com/concepticon/concepticon-data",
             "rdf:type": "prov:Entity",
-            "dc:created": "v2.6.0-61-ge5bba24a",
+            "dc:created": "v2.6.0-179-gd7e9a39f",
             "dc:title": "Repository"
         }
     ],
@@ -62,7 +62,7 @@
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
             "dc:description": "Glosses (aka concept labels) in particular languages given for concepts in a concept list",
-            "dc:extent": 190368,
+            "dc:extent": 190799,
             "tableSchema": {
                 "columns": [
                     {
@@ -222,7 +222,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ContributionTable",
-            "dc:extent": 409,
+            "dc:extent": 410,
             "tableSchema": {
                 "columns": [
                     {
@@ -589,7 +589,7 @@
         },
         {
             "dc:description": "This table lists concepts as they appear in published concept lists. Each concept is linked to a concept list and a concept set (possibly the <NA> set).",
-            "dc:extent": 115181,
+            "dc:extent": 115612,
             "tableSchema": {
                 "columns": [
                     {
@@ -668,7 +668,7 @@
             "url": "tags.csv"
         },
         {
-            "dc:extent": 5982,
+            "dc:extent": 6018,
             "tableSchema": {
                 "columns": [
                     {

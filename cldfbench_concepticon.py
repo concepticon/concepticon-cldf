@@ -42,6 +42,17 @@ class Dataset(BaseDataset):
         subprocess.check_call(
             'git -C {} pull --recurse-submodules'.format(self.dir.resolve()), shell=True)
 
+    def cmd_readme(self, args):
+        desc = """
+This CLDF dataset provides the data of the corresponding release of
+[concepticon/concepticon-data](https://github.com/concepticon/concepticon-data) as CLDF Wordlist.
+It is intended to replace the former method of accessing Concepticon data via `pyconcepticon`
+with the various data access options available with [CLDF](https://github.com/cldf/cookbook/).
+For some guidance on how to do that, see the examples in [doc](doc/).
+"""
+        pre, head, post = super().cmd_readme(args).partition('## CLDF ')
+        return pre + desc + head + post
+
     def schema(self, cldf, api):
         t = cldf.add_component('LanguageTable')
         t.common_props['dc:description'] = \
@@ -312,6 +323,12 @@ class Dataset(BaseDataset):
                     ))
                     seen.add(rid)
 
+        def ckey(c):
+            num = c.id.split('-')[-1]
+            m = re.match('[0-9]+', num)
+            assert m
+            return int(num[:m.end()]), num[m.end():]
+
         for cl in api.conceptlists.values():
             slangs = [n.lower() for n in cl.source_language]
             assert all(n in lids for n in slangs), '{}'.format([n for n in slangs if n not in lids])
@@ -337,7 +354,7 @@ class Dataset(BaseDataset):
                 Alias=cl.alias,
             ))
 
-            for i, c in enumerate(sorted(cl.concepts.values(), key=lambda cl: cl.id), start=1):
+            for i, c in enumerate(sorted(cl.concepts.values(), key=ckey), start=1):
                 data = collections.OrderedDict(
                     [(k, v) for k, v in c.attributes.items() if v is not None])
                 forms = {'english': c.english} if c.english and 'english' in slangs else {}

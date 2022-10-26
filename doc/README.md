@@ -153,3 +153,33 @@ cldf_id|cldf_name
 2417|YOUNGER BROTHER (OF WOMAN)
 559|BROTHER (OF MAN)
 560|BROTHER (OF WOMAN)
+
+
+## Dataset commands
+
+`concepticon-cldf` makes use of [dataset specific sub-commands](https://github.com/cldf/cldfbench/blob/master/src/cldfbench/commands/README.md#dataset-specific-commands)
+to be run with `cldfbench` to provide advanced functionality. To make these subcommands available, you need to
+"install" the dataset as Python package, running
+```shell
+pip install -e .
+```
+
+### `cldfbench concepticon.intersection`
+
+You can compute concepts shared between conceptlists with the `cldfbench concepticon.intersection` command.
+A "classical" use case would be replicating the claim that
+
+> [Comrie-1977-207](https://concepticon.clld.org/contributions/Comrie-1977-207) = [Swadesh-1952-200](https://concepticon.clld.org/contributions/Swadesh-1952-200) + [Swadesh-1955-100](https://concepticon.clld.org/contributions/Swadesh-1955-100)
+
+```shell
+$ cldfbench concepticon.intersection Swadesh-1955-100 Swadesh-1952-200 --maxdist 3
+The lists have 93 concepts in common:
+...
+```
+
+Indeed:
+
+> 93 shared concepts + 7 leftover concepts from Swadesh 100 + 107 leftover concepts from Swadesh 200 = 207
+
+Note that for this to work out, we had to involve Concepticon's conceptset relations when comparing concepts
+for equality, using the `--maxdist 3` option. (Run `cldfbench concepticon.intersection -h` for details.)

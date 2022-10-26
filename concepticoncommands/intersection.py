@@ -6,6 +6,7 @@ is already available (created via 'cldf createdb'), pass the name of the db file
 argument. Otherwise, an in-memory SQLite database is created on the fly, adding about ~20 seconds
 to the processing time.
 """
+import sys
 import sqlite3
 
 from clldutils.clilib import PathType
@@ -25,6 +26,16 @@ def register(parser):
              "if they are only MAXDIST nodes apart in the relation graph.",
         type=int,
         default=0)
+    parser.add_argument(
+        '--equate-instanceof',
+        action='store_true',
+        default=False,
+    )
+    parser.add_argument(
+        '--output-union',
+        action='store_true',
+        default=False,
+    )
     parser.add_argument(
         'clists',
         metavar='CLIST',
@@ -62,6 +73,8 @@ def run(args):
                     for kk, vv in fetch_related(cu, k[0], args.maxdist - abs(level)).items():
                         if kk not in rel:
                             rel[kk] = abs(vv) + abs(level)
+            if args.equate_instanceof:
+                rel.update(fetch_related(cu, cid[0], maxdist=1, rel='instanceof', inv='isa'))
             relset = set(rel.keys())
             # Intersect remaining concepts of the other lists with the related concepts.
             matches = [relset.intersection(concepts[clid]) for clid in args.clists[1:]]
@@ -76,6 +89,16 @@ def run(args):
                     fuzzymatch.append((othercid, rel[othercid]))
                     concepts[args.clists[i]].remove(othercid)
                 res.append(fuzzymatch)
+    if args.output_union:
+        for item in res:
+            if isinstance(item, list):
+                print(item[0][0][0])
+            else:
+                print(item[0])
+        for k, v in concepts.items():
+            for item in v:
+                print(item[0])
+        return
     print("The lists have {} concepts in common:".format(len(res)))
     for i in res:
         print(i)
@@ -85,6 +108,20 @@ def run(args):
 
 
 def fetch_concepts(cu, clid):
+    if clid == '-':
+        stdin = sys.stdin.read()
+        #print(stdin[:40], stdin[-40:])
+        cids = stdin.split()
+        cu.execute("""
+SELECT
+    pt.cldf_id, pt.cldf_name
+FROM
+    ParameterTable as pt
+WHERE
+    pt.cldf_id IN {}
+    """.format(tuple(cids)))
+        return set(cu.fetchall())
+
     cu.execute("""
 SELECT
   pt.cldf_id, pt.cldf_name
@@ -100,32 +137,32 @@ WHERE
     return set(cu.fetchall())
 
 
-def fetch_related(cu, cid, maxdist=3):
+def fetch_related(cu, cid, maxdist=3, rel='broader', inv='narrower'):
     cu.execute("""
 WITH RECURSIVE
-    narrower(n, level) AS (
+    rel(n, level) AS (
         SELECT ?, 0
         UNION ALL
         SELECT
-            Source_ID, narrower.level + 1
+            Source_ID, rel.level + 1
         FROM
-            `conceptrelations.csv`, narrower
+            `conceptrelations.csv`, rel
         WHERE
-            `conceptrelations.csv`.Target_ID=narrower.n AND `conceptrelations.csv`.Relation_ID = 'broader'
+            `conceptrelations.csv`.Target_ID = rel.n AND `conceptrelations.csv`.Relation_ID = ?
     ),
-    broader(n, level) AS (
+    inv(n, level) AS (
         SELECT ?, 0
         UNION ALL
         SELECT
-            Source_ID, broader.level - 1
+            Source_ID, inv.level - 1
         FROM
-            `conceptrelations.csv`, broader
+            `conceptrelations.csv`, inv
         WHERE
-            `conceptrelations.csv`.Target_ID = broader.n AND `conceptrelations.csv`.Relation_ID = 'narrower'
+            `conceptrelations.csv`.Target_ID = inv.n AND `conceptrelations.csv`.Relation_ID = ?
     )
-SELECT DISTINCT n.level AS l, n.n, p.cldf_name FROM narrower as n, ParameterTable as p WHERE n.n = p.cldf_id AND n.level <= ?
+SELECT DISTINCT n.level AS l, n.n, p.cldf_name FROM rel as n, ParameterTable as p WHERE n.n = p.cldf_id AND n.level <= ?
 UNION
-SELECT DISTINCT n.level AS l, n.n, p.cldf_name FROM broader as n, ParameterTable as p WHERE n.n = p.cldf_id AND ABS(n.level) <= ?
+SELECT DISTINCT n.level AS l, n.n, p.cldf_name FROM inv as n, ParameterTable as p WHERE n.n = p.cldf_id AND ABS(n.level) <= ?
 ORDER BY l
-    """, (cid, cid, maxdist, maxdist))
+    """, (cid, rel, cid, inv, maxdist, maxdist))
     return {(row[1], row[2]): row[0] for row in cu.fetchall()}

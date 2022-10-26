@@ -7,7 +7,7 @@ import subprocess
 import collections
 
 from cldfbench import Dataset as BaseDataset, CLDFSpec
-from pycldf.sources import Sources, Source
+from pycldf.sources import Source
 from clldutils.markup import MarkdownLink
 from clldutils.jsonlib import load, dump
 from pyconcepticon import Concepticon

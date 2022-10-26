@@ -127,3 +127,29 @@ Swadesh-1955-100-3|bark|BARK
 Swadesh-1955-100-4|belly|BELLY
 Swadesh-1955-100-5|big|BIG
 ... | ... | ...
+
+SQLite can also help with querying the graph of relations between conceptsets. E.g. all conceptsets that are *narrower*
+than `BROTHER` can be found using the following [recursive common table expression](https://www.sqlite.org/lang_with.html#recursivecte):
+```sql
+WITH RECURSIVE
+  narrower(n) AS (
+    SELECT cldf_id FROM ParameterTable WHERE cldf_name = 'BROTHER'
+    UNION
+    SELECT Source_ID FROM `conceptrelations.csv`, narrower
+     WHERE `conceptrelations.csv`.Target_ID=narrower.n AND `conceptrelations.csv`.Relation_ID = 'broader'
+  )
+SELECT cldf_id, cldf_name FROM ParameterTable
+ WHERE cldf_id IN narrower;
+```
+
+cldf_id|cldf_name
+--- | ---
+1262|BROTHER
+1759|OLDER BROTHER
+1760|YOUNGER BROTHER
+2414|OLDER BROTHER (OF MAN)
+2415|OLDER BROTHER (OF WOMAN)
+2416|YOUNGER BROTHER (OF MAN)
+2417|YOUNGER BROTHER (OF WOMAN)
+559|BROTHER (OF MAN)
+560|BROTHER (OF WOMAN)

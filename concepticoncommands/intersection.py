@@ -28,11 +28,19 @@ def register(parser):
         default=0)
     parser.add_argument(
         '--equate-instanceof',
+        help="Conceptsets related via a instanceof/isa relation will be treated as equal.",
         action='store_true',
         default=False,
     )
     parser.add_argument(
         '--output-union',
+        help="Print the shared concepts as well as the unique, non-shared concepts from each list.",
+        action='store_true',
+        default=False,
+    )
+    parser.add_argument(
+        '--verbose',
+        help="Print matching concepts in each list for each 'fuzzy' shared concept",
         action='store_true',
         default=False,
     )
@@ -72,9 +80,10 @@ def run(args):
                     # lists have different constituent concepts of a "A OR B"-type concept.
                     for kk, vv in fetch_related(cu, k[0], args.maxdist - abs(level)).items():
                         if kk not in rel:
-                            rel[kk] = abs(vv) + abs(level)
+                            rel[kk] = vv + level
             if args.equate_instanceof:
-                rel.update(fetch_related(cu, cid[0], maxdist=1, rel='instanceof', inv='isa'))
+                # We assue that there are no chains of "instanceof" relations.
+                rel.update(fetch_related(cu, cid[0], maxdist=1, inv='instanceof', rel='isa'))
             relset = set(rel.keys())
             # Intersect remaining concepts of the other lists with the related concepts.
             matches = [relset.intersection(concepts[clid]) for clid in args.clists[1:]]
@@ -89,38 +98,46 @@ def run(args):
                     fuzzymatch.append((othercid, rel[othercid]))
                     concepts[args.clists[i]].remove(othercid)
                 res.append(fuzzymatch)
-    if args.output_union:
-        for item in res:
-            if isinstance(item, list):
-                print(item[0][0][0])
+    for item in res:
+        if isinstance(item, list):
+            # Output the broadest concept: Sort matching concepts by distance from first concept.
+            items = sorted(item, key=lambda i: (i[1], i[0]))
+            if all(i[1] == 0 for i in items):
+                # The (ROAD, 0), (PATH, 0) case.
+                # There must be a common broader concept.
+                it = (fetch_broader(cu, [i[0][0] for i in items]), 1)
             else:
-                print(item[0])
+                it = items[0]
+            if args.verbose:
+                print(it[0][0], it[0][1], item)
+            else:
+                print(it[0][0], it[0][1])
+        else:
+            print(item[0], item[1])
+
+    if args.output_union:
+        seen = set()
         for k, v in concepts.items():
             for item in v:
-                print(item[0])
-        return
-    print("The lists have {} concepts in common:".format(len(res)))
-    for i in res:
-        print(i)
-    print("Remaining, not shared concepts:")
-    for k, v in concepts.items():
-        print(k, v)
+                if item[0] not in seen:
+                    print(item[0], item[1])
+                seen.add(item[0])
+
+
+def fetch_broader(cu, cids):
+    cu.execute(
+        " UNION ".join([
+            "SELECT Target_ID FROM `conceptrelations.csv` WHERE Source_ID = ?" for _ in cids]),
+        cids)
+    res = cu.fetchall()
+    assert len(res) == 1
+    cu.execute("SELECT cldf_id, cldf_name FROM parametertable WHERE cldf_ID = ?", (res[0][0],))
+    return cu.fetchone()
 
 
 def fetch_concepts(cu, clid):
     if clid == '-':
-        stdin = sys.stdin.read()
-        #print(stdin[:40], stdin[-40:])
-        cids = stdin.split()
-        cu.execute("""
-SELECT
-    pt.cldf_id, pt.cldf_name
-FROM
-    ParameterTable as pt
-WHERE
-    pt.cldf_id IN {}
-    """.format(tuple(cids)))
-        return set(cu.fetchall())
+        return {tuple(l.split(' ', maxsplit=1)) for l in sys.stdin.read().split('\n') if l.strip()}
 
     cu.execute("""
 SELECT

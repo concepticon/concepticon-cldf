@@ -171,18 +171,24 @@ A "classical" use case would be replicating the claim that
 
 > [Comrie-1977-207](https://concepticon.clld.org/contributions/Comrie-1977-207) = [Swadesh-1952-200](https://concepticon.clld.org/contributions/Swadesh-1952-200) + [Swadesh-1955-100](https://concepticon.clld.org/contributions/Swadesh-1955-100)
 
+First, we merge the two Swadesh lists:
 ```shell
 $ cldfbench concepticon.intersection Swadesh-1955-100 Swadesh-1952-200 --maxdist 2 --output-union | \
   wc -l
 207
+```
+
+Then we pipe the merged Swadesh list as first list to a second `cldfbench concepticon.intersection` call (using the
+`-` notation):
+```shell
 $ cldfbench concepticon.intersection Swadesh-1955-100 Swadesh-1952-200 --maxdist 2 --output-union | \
-  cldfbench concepticon.intersection - Comrie-1977-207 --maxdist 3 --equate-instanceof --output-union | \
+  cldfbench concepticon.intersection - Comrie-1977-207 --maxdist 3 --equate-instanceof --output-union --verbose | \
   wc -l
 207
 ```
 
-So the union of Swadesh-1955-100 and Swadesh-1952-200 yields 207 concepts, and intersecting these with the
-concepts of Comrie-1977-207 yields the same 207 concepts.
+So the union of Swadesh-1955-100 and Swadesh-1952-200 yields 207 concepts, and merging these with the
+concepts of Comrie-1977-207 yields (roughly) the same 207 concepts.
 
 Note that for this to work out, we had to involve Concepticon's conceptset relations when comparing concepts
 for equality, using the `--maxdist` and `--equate-instanceof` options.

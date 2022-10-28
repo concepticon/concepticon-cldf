@@ -21,6 +21,10 @@ COORDS = {
     'northamericanenglish': (39.10, -101.80),
     'lebanesearabic': (33.96, 35.49),
 }
+# Missing data (in the sources) is marked using a dash. We don't import these markers in
+# the database but regard absence of data in the database as absence of data in the
+# sources.
+NA = '-'
 
 
 class Dataset(BaseDataset):
@@ -145,8 +149,8 @@ For some guidance on how to do that, see the examples in [doc](doc/).
                 "dc:description": "Languages in which the conceptlist provides gloss labels",
                 "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#languageReference"},
             {
-                "name": "Target_Language_ID",
-                "dc:description": "Target language, i.e. language (grouo) from which lexical data "
+                "name": "Target_Language",
+                "dc:description": "Target language(s), i.e. language (group) from which lexical data "
                                   "was to be collected using the conceptlist as questionnaire",
             },
             {"name": "List_Suffix", "dc:description": "Name suffix for disambiguation"},
@@ -181,6 +185,9 @@ For some guidance on how to do that, see the examples in [doc](doc/).
             {
                 "name": "ID",
                 "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#id"},
+            {
+                "name": "Name",
+                "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#name"},
             {
                 "name": "Number",
                 "dc:description": "Number of the concept within the concept list"},
@@ -338,12 +345,12 @@ For some guidance on how to do that, see the examples in [doc](doc/).
                 ID=cl.id,
                 Name='{} {}{}'.format(cl.author, cl.year, cl.list_suffix or ''),
                 Description=desc,
-                Contributor=cl.author.replace('AND', 'and').split(' and '),
+                Contributor=cl.author.replace('AND', 'and').replace('{', '').replace('}', '').split(' and '),
                 Year=cl.year,
                 List_Suffix=cl.list_suffix,
                 Number_Of_Items=cl.items,
                 Gloss_Language_IDs=slangs,
-                Target_Language_ID=cl.target_language.lower(),
+                Target_Language=cl.target_language,
                 Citation='\n'.join(str(api.bibliography[ref]) for ref in cl.refs),
                 Source=cl.refs,
                 Related=ref_in_note.get(cl.id, []),
@@ -373,6 +380,7 @@ For some guidance on how to do that, see the examples in [doc](doc/).
                     args.writer.objects['ContributionTable'][-1]['Attributes'] = sorted(data.keys())
                 args.writer.objects['concepts.csv'].append(dict(
                     ID=c.id,
+                    Name=c.label,
                     Concepticon_ID=c.concepticon_id or '0',
                     Conceptlist_ID=cl.id,
                     Number=c.number,
@@ -380,13 +388,14 @@ For some guidance on how to do that, see the examples in [doc](doc/).
                     Attributes=data,
                 ))
                 for j, (lid, form) in enumerate(sorted(forms.items()), start=1):
-                    args.writer.objects['FormTable'].append(dict(
-                        ID='{}-{}'.format(c.id, j),
-                        Form=form,
-                        Parameter_ID=c.concepticon_id or '0',
-                        Language_ID=lid,
-                        Concept_ID=c.id,
-                    ))
+                    if form != NA:
+                        args.writer.objects['FormTable'].append(dict(
+                            ID='{}-{}'.format(c.id, j),
+                            Form=form,
+                            Parameter_ID=c.concepticon_id or '0',
+                            Language_ID=lid,
+                            Concept_ID=c.id,
+                        ))
 
         for obj_type, retirements in api.retirements.items():
             for ret in retirements:

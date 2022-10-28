@@ -4,7 +4,7 @@ bs4==0.0.1
 certifi==2019.11.28
 chardet==3.0.4
 cldfbench==1.12.0
--e git+https://github.com/concepticon/concepticon-cldf@56e2f0152067227b51ea645ae316bdbde71719a3#egg=cldfbench_concepticon
+-e git+https://github.com/concepticon/concepticon-cldf@7bbae996f5dae480a2e9d150e187d16143aa2137#egg=cldfbench_concepticon
 -e git+https://github.com/concepticon/norare-cldf@7981607c5615b527f6d80a47b3dd5b3f24ed5c08#egg=cldfbench_norare
 cldfcatalog==1.5.1
 cldfzenodo==0.2.0
@@ -31,7 +31,7 @@ pluggy==0.13.1
 purl==1.6
 py==1.10.0
 pybtex==0.24.0
-pycldf==1.27.0
+pycldf==1.28.0
 -e git+https://github.com/concepticon/pyconcepticon@15d9a64bd24664e4a0925c1e22a3a73606559d76#egg=pyconcepticon
 pycountry==22.3.5
 pyglottolog==3.9.0

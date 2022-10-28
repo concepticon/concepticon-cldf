@@ -47,7 +47,7 @@ def register(parser):
     parser.add_argument(
         'clists',
         metavar='CLIST',
-        help="Conceptlist identifier",
+        help="Conceptlist identifier (or '-' to read the concepts of one list from stdin).",
         nargs='+')
 
 

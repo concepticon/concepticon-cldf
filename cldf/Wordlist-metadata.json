@@ -30,7 +30,7 @@
         {
             "rdf:about": "https://github.com/concepticon/concepticon-cldf",
             "rdf:type": "prov:Entity",
-            "dc:created": "56e2f01",
+            "dc:created": "7bbae99",
             "dc:title": "Repository"
         },
         {
@@ -62,7 +62,7 @@
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
             "dc:description": "Glosses (aka concept labels) in particular languages given for concepts in a concept list",
-            "dc:extent": 190799,
+            "dc:extent": 190457,
             "tableSchema": {
                 "columns": [
                     {
@@ -296,8 +296,8 @@
                         "name": "Gloss_Language_IDs"
                     },
                     {
-                        "dc:description": "Target language, i.e. language (grouo) from which lexical data was to be collected using the conceptlist as questionnaire",
-                        "name": "Target_Language_ID"
+                        "dc:description": "Target language(s), i.e. language (group) from which lexical data was to be collected using the conceptlist as questionnaire",
+                        "name": "Target_Language"
                     },
                     {
                         "dc:description": "Name suffix for disambiguation",
@@ -595,6 +595,10 @@
                     {
                         "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#id",
                         "name": "ID"
+                    },
+                    {
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#name",
+                        "name": "Name"
                     },
                     {
                         "dc:description": "Number of the concept within the concept list",

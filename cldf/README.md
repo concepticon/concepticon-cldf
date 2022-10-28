@@ -16,7 +16,7 @@ property | value
 [dc:publisher](http://purl.org/dc/terms/publisher) | <dl><dt>http://xmlns.com/foaf/0.1/name</dt><dd>Max Planck Institute for Evolutionary Anthropology</dd><dt><a href="http://purl.org/dc/terms/Location">dc:Location</a></dt><dd>Leipzig</dd><dt>http://xmlns.com/foaf/0.1/homepage</dt><dd>https://www.eva.mpg.de</dd><dt>http://xmlns.com/foaf/0.1/mbox</dt><dd>concepticon@eva.mpg.de</dd></dl>
 [dc:relation](http://purl.org/dc/terms/relation) | http://www.lrec-conf.org/proceedings/lrec2016/summaries/127.html
 [dcat:accessURL](http://www.w3.org/ns/dcat#accessURL) | https://concepticon.clld.org
-[prov:wasDerivedFrom](http://www.w3.org/ns/prov#wasDerivedFrom) | <ol><li><a href="https://github.com/concepticon/concepticon-cldf/tree/56e2f01">concepticon/concepticon-cldf 56e2f01</a></li><li><a href="https://github.com/glottolog/glottolog/tree/v4.6">Glottolog v4.6</a></li><li><a href="https://github.com/concepticon/concepticon-data/tree/d7e9a39f">concepticon/concepticon-data v2.6.0-179-gd7e9a39f</a></li></ol>
+[prov:wasDerivedFrom](http://www.w3.org/ns/prov#wasDerivedFrom) | <ol><li><a href="https://github.com/concepticon/concepticon-cldf/tree/7bbae99">concepticon/concepticon-cldf 7bbae99</a></li><li><a href="https://github.com/glottolog/glottolog/tree/v4.6">Glottolog v4.6</a></li><li><a href="https://github.com/concepticon/concepticon-data/tree/d7e9a39f">concepticon/concepticon-data v2.6.0-179-gd7e9a39f</a></li></ol>
 [prov:wasGeneratedBy](http://www.w3.org/ns/prov#wasGeneratedBy) | <ol><li><strong>python</strong>: 3.8.10</li><li><strong>python-packages</strong>: <a href="./requirements.txt">requirements.txt</a></li></ol>
 [rdf:ID](http://www.w3.org/1999/02/22-rdf-syntax-ns#ID) | concepticon
 [rdf:type](http://www.w3.org/1999/02/22-rdf-syntax-ns#type) | http://www.w3.org/ns/dcat#Distribution
@@ -29,7 +29,7 @@ Glosses (aka concept labels) in particular languages given for concepts in a con
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF FormTable](http://cldf.clld.org/v1.0/terms.rdf#FormTable)
-[dc:extent](http://purl.org/dc/terms/extent) | 190799
+[dc:extent](http://purl.org/dc/terms/extent) | 190457
 
 
 ### Columns
@@ -88,7 +88,7 @@ Name/Property | Datatype | Description
 `Year` | `integer` | 
 `Number_Of_Items` | `integer` | 
 [Gloss_Language_IDs](http://cldf.clld.org/v1.0/terms.rdf#languageReference) | list of `string` (separated by ` `) | Languages in which the conceptlist provides gloss labels<br>References [languages.csv::ID](#table-languagescsv)
-`Target_Language_ID` | `string` | Target language, i.e. language (grouo) from which lexical data was to be collected using the conceptlist as questionnaire
+`Target_Language` | `string` | Target language(s), i.e. language (group) from which lexical data was to be collected using the conceptlist as questionnaire
 `List_Suffix` | `string` | Name suffix for disambiguation
 `Source_URL` | `anyURI` | 
 `Pages` | `string` | 
@@ -184,6 +184,7 @@ property | value
 Name/Property | Datatype | Description
  --- | --- | --- 
 [ID](http://cldf.clld.org/v1.0/terms.rdf#id) | `string` | Primary key
+[Name](http://cldf.clld.org/v1.0/terms.rdf#name) | `string` | 
 `Number` | `string` | Number of the concept within the concept list
 `Index` | `integer` | 1-based index of the concept in its conceptlist
 [Conceptlist_ID](http://cldf.clld.org/v1.0/terms.rdf#contributionReference) | `string` | References [conceptlists.csv::ID](#table-conceptlistscsv)

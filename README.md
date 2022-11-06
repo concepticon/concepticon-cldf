@@ -1,5 +1,7 @@
 # Dataset concepticon
 
+[![Build Status](https://github.com/concepticon/concepticon-cldf/workflows/CLDF-validation/badge.svg)](https://github.com/concepticon/concepticon-cldf/actions?query=workflow%3ACLDF-validation)
+
 ## How to cite
 
 If you use these data please cite

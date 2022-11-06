@@ -1,22 +1,23 @@
 <a name="ds-wordlistmetadatajson"> </a>
 
-# Wordlist Concepticon
+# Wordlist CLLD Concepticon as CLDF dataset
 
 **CLDF Metadata**: [Wordlist-metadata.json](./Wordlist-metadata.json)
 
 **Sources**: [sources.bib](./sources.bib)
 
-List, Johann-Mattis and Cysouw, Michael and Forkel, Robert. 2016. Concepticon. A resource for the linking of concept lists. In Chair), Nicoletta Calzolari (Conference and Choukri, Khalid and Declerck, Thierry and Grobelnik, Marko and Maegaard, Bente and Mariani, Joseph and Moreno, Asuncion and Odijk, Jan and Piperidis, Stelios (eds.), Proceedings of the Tenth International Conference on Language Resources and Evaluation, 2393-2400. European Language Resources Association (ELRA).
+The Concepticon is a special Wordlist, where the words are concept labels in particular languages which have been used to elicit lexical data in other languages. These labels are grouped into concept sets, the 'Parameters' of the Concepticon, which can serve as cross-linguistic, comparative concepts.
 
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF Wordlist](http://cldf.clld.org/v1.0/terms.rdf#Wordlist)
 [dc:contributor](http://purl.org/dc/terms/contributor) | <dl><dt><a href="http://purl.org/dc/terms/references">dc:references</a></dt><dd>CONTRIBUTORS.md</dd><dt><a href="http://purl.org/dc/terms/format">dc:format</a></dt><dd>text/markdown</dd></dl>
+[dc:identifier](http://purl.org/dc/terms/identifier) | https://concepticon.clld.org
 [dc:license](http://purl.org/dc/terms/license) | <dl><dt>url</dt><dd>https://creativecommons.org/licenses/by/4.0/</dd><dt>icon</dt><dd>cc-by.png</dd><dt>name</dt><dd>Creative Commons Attribution 4.0 International License</dd></dl>
 [dc:publisher](http://purl.org/dc/terms/publisher) | <dl><dt>http://xmlns.com/foaf/0.1/name</dt><dd>Max Planck Institute for Evolutionary Anthropology</dd><dt><a href="http://purl.org/dc/terms/Location">dc:Location</a></dt><dd>Leipzig</dd><dt>http://xmlns.com/foaf/0.1/homepage</dt><dd>https://www.eva.mpg.de</dd><dt>http://xmlns.com/foaf/0.1/mbox</dt><dd>concepticon@eva.mpg.de</dd></dl>
 [dc:relation](http://purl.org/dc/terms/relation) | http://www.lrec-conf.org/proceedings/lrec2016/summaries/127.html
 [dcat:accessURL](http://www.w3.org/ns/dcat#accessURL) | https://concepticon.clld.org
-[prov:wasDerivedFrom](http://www.w3.org/ns/prov#wasDerivedFrom) | <ol><li><a href="https://github.com/concepticon/concepticon-cldf/tree/7bbae99">concepticon/concepticon-cldf 7bbae99</a></li><li><a href="https://github.com/glottolog/glottolog/tree/v4.6">Glottolog v4.6</a></li><li><a href="https://github.com/concepticon/concepticon-data/tree/d7e9a39f">concepticon/concepticon-data v2.6.0-179-gd7e9a39f</a></li></ol>
+[prov:wasDerivedFrom](http://www.w3.org/ns/prov#wasDerivedFrom) | <ol><li><a href="https://github.com/concepticon/concepticon-cldf/tree/a7f92cc">concepticon/concepticon-cldf a7f92cc</a></li><li><a href="https://github.com/glottolog/glottolog/tree/v4.6">Glottolog v4.6</a></li><li><a href="https://github.com/concepticon/concepticon-data/tree/v3.0.0">concepticon/concepticon-data v3.0.0</a></li></ol>
 [prov:wasGeneratedBy](http://www.w3.org/ns/prov#wasGeneratedBy) | <ol><li><strong>python</strong>: 3.8.10</li><li><strong>python-packages</strong>: <a href="./requirements.txt">requirements.txt</a></li></ol>
 [rdf:ID](http://www.w3.org/1999/02/22-rdf-syntax-ns#ID) | concepticon
 [rdf:type](http://www.w3.org/1999/02/22-rdf-syntax-ns#type) | http://www.w3.org/ns/dcat#Distribution
@@ -29,7 +30,7 @@ Glosses (aka concept labels) in particular languages given for concepts in a con
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF FormTable](http://cldf.clld.org/v1.0/terms.rdf#FormTable)
-[dc:extent](http://purl.org/dc/terms/extent) | 190457
+[dc:extent](http://purl.org/dc/terms/extent) | 191422
 
 
 ### Columns
@@ -50,7 +51,7 @@ The Concepticon - i.e. the list of concept sets to which individual concepts giv
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF ParameterTable](http://cldf.clld.org/v1.0/terms.rdf#ParameterTable)
-[dc:extent](http://purl.org/dc/terms/extent) | 3961
+[dc:extent](http://purl.org/dc/terms/extent) | 3964
 
 
 ### Columns
@@ -69,7 +70,7 @@ Name/Property | Datatype | Description
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF ContributionTable](http://cldf.clld.org/v1.0/terms.rdf#ContributionTable)
-[dc:extent](http://purl.org/dc/terms/extent) | 410
+[dc:extent](http://purl.org/dc/terms/extent) | 413
 
 
 ### Columns
@@ -102,7 +103,7 @@ Languages listed here are languages in which a concept list provides concept lab
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF LanguageTable](http://cldf.clld.org/v1.0/terms.rdf#LanguageTable)
-[dc:extent](http://purl.org/dc/terms/extent) | 58
+[dc:extent](http://purl.org/dc/terms/extent) | 59
 
 
 ### Columns
@@ -176,7 +177,7 @@ This table lists concepts as they appear in published concept lists. Each concep
 
 property | value
  --- | ---
-[dc:extent](http://purl.org/dc/terms/extent) | 115612
+[dc:extent](http://purl.org/dc/terms/extent) | 116577
 
 
 ### Columns

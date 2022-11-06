@@ -1,8 +1,8 @@
 {
     "id": "concepticon",
-    "title": null,
+    "title": "CLLD Concepticon as CLDF dataset",
     "description": null,
     "license": "CC-BY-4.0",
-    "url": null,
+    "url": "https://concepticon.clld.org",
     "citation": null
 }

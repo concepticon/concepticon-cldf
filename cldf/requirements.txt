@@ -2,28 +2,37 @@ appdirs==1.4.3
 Babel==2.9.1
 bs4==0.0.1
 certifi==2019.11.28
+cffi==1.14.5
 chardet==3.0.4
-cldfbench==1.12.0
--e git+https://github.com/concepticon/concepticon-cldf@7bbae996f5dae480a2e9d150e187d16143aa2137#egg=cldfbench_concepticon
--e git+https://github.com/concepticon/norare-cldf@7981607c5615b527f6d80a47b3dd5b3f24ed5c08#egg=cldfbench_norare
+cldfbench==1.13.0
+-e git+https://github.com/concepticon/concepticon-cldf@a7f92cc8ca858a5c452dce80f3fc81714bcae41c#egg=cldfbench_concepticon
+-e git+https://github.com/concepticon/norare-cldf@b8eece19e20b2fc7e961f1137f643536e184923a#egg=cldfbench_norare
 cldfcatalog==1.5.1
+cldfviz==0.9.0
 cldfzenodo==0.2.0
-clldutils==3.12.0
+clldutils==3.13.0
 colorama==0.4.3
 colorlog==5.0.1
-csvw==3.1.2
+csvw==3.1.3
+cycler==0.11.0
 gitdb==4.0.7
 greenlet==1.1.0
 html5lib==1.0.1
 idna==2.8
 iniconfig==1.1.1
 isodate==0.6.0
+Jinja2==3.1.2
+jmespath==1.0.1
 jsonschema==4.9.0
+kiwisolver==1.4.4
 lxml==4.9.1
 Markdown==3.3.4
+MarkupSafe==2.0.1
+matplotlib==3.6.0
 nameparser==1.0.6
 networkx==2.8.5
 newick==1.3.2
+numpy==1.23.4
 openpyxl==3.0.7
 packaging==20.3
 pkg_resources==0.0.0
@@ -31,16 +40,18 @@ pluggy==0.13.1
 purl==1.6
 py==1.10.0
 pybtex==0.24.0
-pycldf==1.28.0
--e git+https://github.com/concepticon/pyconcepticon@15d9a64bd24664e4a0925c1e22a3a73606559d76#egg=pyconcepticon
+pycldf==1.29.0
+-e git+https://github.com/concepticon/pyconcepticon@a1c61038b8bcfc166e00304bed2e762b437e42a1#egg=pyconcepticon
 pycountry==22.3.5
 pyglottolog==3.9.0
+pylatexenc==2.10
+pyparsing==2.4.6
 pyrsistent==0.18.1
 pytest==6.2.4
 python-dateutil==2.8.1
 pytz==2021.1
 rdflib==5.0.0
-requests==2.22.0
+requests==2.28.1
 rfc3986==1.5.0
 six==1.14.0
 smmap==4.0.0
@@ -52,6 +63,8 @@ tqdm==4.61.0
 uritemplate==3.0.1
 urllib3==1.25.8
 webencodings==0.5.1
+wordcloud==1.8.2.2
 xlrd==2.0.1
+yattag==1.14.0
 zenodoclient==0.4.1
 zipp==3.4.1

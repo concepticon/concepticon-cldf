@@ -5,7 +5,7 @@ certifi==2019.11.28
 cffi==1.14.5
 chardet==3.0.4
 cldfbench==1.13.0
--e git+https://github.com/concepticon/concepticon-cldf@a7f92cc8ca858a5c452dce80f3fc81714bcae41c#egg=cldfbench_concepticon
+-e git+https://github.com/concepticon/concepticon-cldf@149576263985d48e3b7f98f298e7f6fa411cd360#egg=cldfbench_concepticon
 -e git+https://github.com/concepticon/norare-cldf@b8eece19e20b2fc7e961f1137f643536e184923a#egg=cldfbench_norare
 cldfcatalog==1.5.1
 cldfviz==0.9.0
@@ -38,7 +38,7 @@ packaging==20.3
 pkg_resources==0.0.0
 pluggy==0.13.1
 purl==1.6
-py==1.10.0
+py==1.11.0
 pybtex==0.24.0
 pycldf==1.29.0
 -e git+https://github.com/concepticon/pyconcepticon@a1c61038b8bcfc166e00304bed2e762b437e42a1#egg=pyconcepticon
@@ -61,7 +61,7 @@ tabulate==0.8.9
 termcolor==1.1.0
 tqdm==4.61.0
 uritemplate==3.0.1
-urllib3==1.25.8
+urllib3==1.26.12
 webencodings==0.5.1
 wordcloud==1.8.2.2
 xlrd==2.0.1

@@ -237,15 +237,24 @@ For some guidance on how to do that, see the examples in [doc](doc/).
         self.schema(args.writer.cldf, api)
 
         for key, entry in parse_string(api.bibfile.read_text(encoding='utf8'), 'bibtex').entries.items():
-            src = Source.from_entry(key, entry)
-            src = Source(src.genre.lower(), src.id, **{k.lower(): v for k, v in src.items()})
-            args.writer.cldf.sources.add(src)
+            args.writer.cldf.sources.add(Source.from_entry(
+                key, entry,
+                _check_id=False,
+                _lowercase=True,
+                _strip_tex=[
+                    'author', 'editor', 'title', 'number', 'abstract', 'publisher',
+                    'booktitle', 'url', 'series', 'journal']))
 
         args.writer.cldf.properties.update({
             k: v for k, v in load(cdata / 'metadata.json').items()
             if not k.startswith('@')})
         src = args.writer.cldf.sources['List2016a']
-        args.writer.cldf.properties['dc:description'] = str(src)
+        args.writer.cldf.properties['dc:title'] = 'CLLD Concepticon as CLDF dataset'
+        args.writer.cldf.properties['dc:description'] = \
+            "The Concepticon is a special Wordlist, where the words are concept labels in " \
+            "particular languages which have been used to elicit lexical data in other languages. " \
+            "These labels are grouped into concept sets, the 'Parameters' of the Concepticon, " \
+            "which can serve as cross-linguistic, comparative concepts."
         args.writer.cldf.properties['dc:relation'] = src['url']
 
         shutil.copy(cdata / 'CONTRIBUTORS.md', self.cldf_dir)

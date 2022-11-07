@@ -1,6 +1,6 @@
 # Using Concepticon data from the CLDF dataset
 
-[CLDF](https://cldf.clld.org) is package format for linguistic data, bundling a set of tables as CSV files
+[CLDF](https://cldf.clld.org) is a package format for linguistic data, bundling a set of tables as CSV files
 with JSON metadata, describing - among other things - relations between these tables.
 
 First, familiarize yourself with the data model by looking through [cldf/README.md](../cldf/README.md).
@@ -8,10 +8,11 @@ First, familiarize yourself with the data model by looking through [cldf/README.
 
 ## It's all just text files!
 
-The files in a CLDF dataset are just text files (even though the text may comply with "higher-level" formatting
+The files in a CLDF dataset are just text files (even though the text may comply with higher-level formatting
 rules like CSV or JSON). Thus, basic exploration of the data can easily be done with the tools available in the
 [Unix Shell](https://swcarpentry.github.io/shell-novice/).
 
+You can list the files in the dataset
 ```shell
 $ ls -1 cldf
 concepticon.csv
@@ -31,11 +32,13 @@ tags.csv
 Wordlist-metadata.json
 ```
 
+count rows in CSV tables
 ```shell
 $ wc -l cldf/languages.csv 
-59 cldf/languages.csv
+60 cldf/languages.csv
 ```
 
+and inspect the headers and data
 ```shell
 $ head -n 2 cldf/languages.csv 
 ID,Name,Macroarea,Latitude,Longitude,Glottocode,ISO639P3code
@@ -63,14 +66,18 @@ english,fire (n.)
 english,the fire
 ```
 
-Note that the gloss `FIRE, (FIREWOOD)` contains a comma, hence naively trying to split columns by splitting text lines
-at commas would have failed.
+Notes: 
+- `csvgrep` allows you to "grep" in a CSV-aware way, i.e. considering only specified columns in a line.
+- `csvcut` allows you to cut out relevant columns of a CSV file, thus creating output that is more more easily manipulated using
+  standard shell tools.
+- The gloss `FIRE, (FIREWOOD)` contains a comma, hence naively trying to split columns by splitting text lines at commas would have failed.
 
 
 ## Related tables, that is.
 
 If we wanted to list concepts of a conceptlist with gloss and mapped Concepticon gloss, we'd have to join data from
-two tables: `glosses.csv` and `concepticon.csv` (and exploit the fact that gloss identifiers are based on the 
+two tables: [`glosses.csv`](../cldf/glosses.csv) and [`concepticon.csv`](../cldf/concepticon.csv) (and exploit the 
+fact that gloss identifiers are based on the 
 conceptlist identifiers):
 
 ```shell
@@ -87,9 +94,9 @@ cloud,Swadesh-1955-100-14,CLOUD
 ```
 
 Now, if we wanted to do this "properly", i.e. use only the conceptlist identifier `Swadesh-1955-100` as input, we'd
-have to join data from `concepts.csv`, too, which gets a bit cumbersome on the shell. But CLDF contains all the
+have to join data from [`concepts.csv`](../cldf/concepts.csv), too, which gets a bit cumbersome on the shell. But CLDF contains all the
 information necessary to load a dataset into a relational database - and the [pycldf](https://github.com/cldf/pycldf)
-package can turn any CLDF dataset into a [SQLite](https://sqlite.com/index.html) database, which can be queried
+package can turn any CLDF dataset into a [SQLite database](https://pycldf.readthedocs.io/en/latest/db.html), which can be queried
 more comfortably using SQL.
 
 ```shell
@@ -176,6 +183,15 @@ First, we merge the two Swadesh lists:
 $ cldfbench concepticon.intersection Swadesh-1955-100 Swadesh-1952-200 --maxdist 2 --output-union | \
   wc -l
 207
+```
+
+Note that this took quite long (~20secs), because the implementation first loads the data into an 
+[in-memory sqlite database](https://www.sqlite.org/inmemorydb.html).
+If we specify the database we already created above, this will run a lot quicker:
+```shell
+f$ time cldfbench concepticon.intersection --db concepticon.sqlite Swadesh-1955-100 Swadesh-1952-200 --maxdist 2 --output-union | wc -l
+207
+real    0m1,512s
 ```
 
 Then we pipe the merged Swadesh list as first list to a second `cldfbench concepticon.intersection` call (using the

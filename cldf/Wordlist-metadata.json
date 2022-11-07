@@ -10,7 +10,8 @@
         "dc:references": "CONTRIBUTORS.md",
         "dc:format": "text/markdown"
     },
-    "dc:description": "List, Johann-Mattis and Cysouw, Michael and Forkel, Robert. 2016. Concepticon. A resource for the linking of concept lists. In Chair), Nicoletta Calzolari (Conference and Choukri, Khalid and Declerck, Thierry and Grobelnik, Marko and Maegaard, Bente and Mariani, Joseph and Moreno, Asuncion and Odijk, Jan and Piperidis, Stelios (eds.), Proceedings of the Tenth International Conference on Language Resources and Evaluation, 2393-2400. European Language Resources Association (ELRA).",
+    "dc:description": "The Concepticon is a special Wordlist, where the words are concept labels in particular languages which have been used to elicit lexical data in other languages. These labels are grouped into concept sets, the 'Parameters' of the Concepticon, which can serve as cross-linguistic, comparative concepts.",
+    "dc:identifier": "https://concepticon.clld.org",
     "dc:license": {
         "url": "https://creativecommons.org/licenses/by/4.0/",
         "icon": "cc-by.png",
@@ -24,13 +25,13 @@
     },
     "dc:relation": "http://www.lrec-conf.org/proceedings/lrec2016/summaries/127.html",
     "dc:source": "sources.bib",
-    "dc:title": "Concepticon",
+    "dc:title": "CLLD Concepticon as CLDF dataset",
     "dcat:accessURL": "https://concepticon.clld.org",
     "prov:wasDerivedFrom": [
         {
             "rdf:about": "https://github.com/concepticon/concepticon-cldf",
             "rdf:type": "prov:Entity",
-            "dc:created": "7bbae99",
+            "dc:created": "a7f92cc",
             "dc:title": "Repository"
         },
         {
@@ -42,7 +43,7 @@
         {
             "rdf:about": "https://github.com/concepticon/concepticon-data",
             "rdf:type": "prov:Entity",
-            "dc:created": "v2.6.0-179-gd7e9a39f",
+            "dc:created": "v3.0.0",
             "dc:title": "Repository"
         }
     ],
@@ -62,7 +63,7 @@
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
             "dc:description": "Glosses (aka concept labels) in particular languages given for concepts in a concept list",
-            "dc:extent": 190457,
+            "dc:extent": 191422,
             "tableSchema": {
                 "columns": [
                     {
@@ -153,7 +154,7 @@
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ParameterTable",
             "dc:description": "The Concepticon - i.e. the list of concept sets to which individual concepts given in concept lists are mapped.",
-            "dc:extent": 3961,
+            "dc:extent": 3964,
             "tableSchema": {
                 "columns": [
                     {
@@ -222,7 +223,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ContributionTable",
-            "dc:extent": 410,
+            "dc:extent": 413,
             "tableSchema": {
                 "columns": [
                     {
@@ -375,7 +376,7 @@
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#LanguageTable",
             "dc:description": "Languages listed here are languages in which a concept list provides concept labels; typically major scientific languages or major languages from the region in which lexical data was collected.",
-            "dc:extent": 58,
+            "dc:extent": 59,
             "tableSchema": {
                 "columns": [
                     {
@@ -589,7 +590,7 @@
         },
         {
             "dc:description": "This table lists concepts as they appear in published concept lists. Each concept is linked to a concept list and a concept set (possibly the <NA> set).",
-            "dc:extent": 115612,
+            "dc:extent": 116577,
             "tableSchema": {
                 "columns": [
                     {

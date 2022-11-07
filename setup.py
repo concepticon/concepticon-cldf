@@ -15,6 +15,7 @@ setup(
         ]
     },
     install_requires=[
+        'clldutils>=3.13.0',
         'csvw>=3.1.2',
         'cldfbench',
     ],

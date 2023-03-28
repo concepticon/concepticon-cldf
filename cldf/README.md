@@ -17,8 +17,8 @@ property | value
 [dc:publisher](http://purl.org/dc/terms/publisher) | <dl><dt>http://xmlns.com/foaf/0.1/name</dt><dd>Max Planck Institute for Evolutionary Anthropology</dd><dt><a href="http://purl.org/dc/terms/Location">dc:Location</a></dt><dd>Leipzig</dd><dt>http://xmlns.com/foaf/0.1/homepage</dt><dd>https://www.eva.mpg.de</dd><dt>http://xmlns.com/foaf/0.1/mbox</dt><dd>concepticon@eva.mpg.de</dd></dl>
 [dc:relation](http://purl.org/dc/terms/relation) | http://www.lrec-conf.org/proceedings/lrec2016/summaries/127.html
 [dcat:accessURL](http://www.w3.org/ns/dcat#accessURL) | https://concepticon.clld.org
-[prov:wasDerivedFrom](http://www.w3.org/ns/prov#wasDerivedFrom) | <ol><li><a href="https://github.com/concepticon/concepticon-cldf/tree/1495762">concepticon/concepticon-cldf 1495762</a></li><li><a href="https://github.com/glottolog/glottolog/tree/v4.6">Glottolog v4.6</a></li><li><a href="https://github.com/concepticon/concepticon-data/tree/v3.0.0">concepticon/concepticon-data v3.0.0</a></li></ol>
-[prov:wasGeneratedBy](http://www.w3.org/ns/prov#wasGeneratedBy) | <ol><li><strong>python</strong>: 3.8.10</li><li><strong>python-packages</strong>: <a href="./requirements.txt">requirements.txt</a></li></ol>
+[prov:wasDerivedFrom](http://www.w3.org/ns/prov#wasDerivedFrom) | <ol><li><a href="https://github.com/concepticon/concepticon-cldf/tree/v3.0.0">concepticon/concepticon-cldf v3.0.0</a></li><li><a href="https://github.com/glottolog/glottolog/tree/v4.7">Glottolog v4.7</a></li><li><a href="https://github.com/concepticon/concepticon-data/tree/v3.1.0">concepticon/concepticon-data v3.1.0</a></li></ol>
+[prov:wasGeneratedBy](http://www.w3.org/ns/prov#wasGeneratedBy) | <ol><li><strong>python</strong>: 3.10.6</li><li><strong>python-packages</strong>: <a href="./requirements.txt">requirements.txt</a></li></ol>
 [rdf:ID](http://www.w3.org/1999/02/22-rdf-syntax-ns#ID) | concepticon
 [rdf:type](http://www.w3.org/1999/02/22-rdf-syntax-ns#type) | http://www.w3.org/ns/dcat#Distribution
 
@@ -30,7 +30,7 @@ Glosses (aka concept labels) in particular languages given for concepts in a con
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF FormTable](http://cldf.clld.org/v1.0/terms.rdf#FormTable)
-[dc:extent](http://purl.org/dc/terms/extent) | 191422
+[dc:extent](http://purl.org/dc/terms/extent) | 195696
 
 
 ### Columns
@@ -51,7 +51,7 @@ The Concepticon - i.e. the list of concept sets to which individual concepts giv
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF ParameterTable](http://cldf.clld.org/v1.0/terms.rdf#ParameterTable)
-[dc:extent](http://purl.org/dc/terms/extent) | 3964
+[dc:extent](http://purl.org/dc/terms/extent) | 3968
 
 
 ### Columns
@@ -61,6 +61,7 @@ Name/Property | Datatype | Description
 [ID](http://cldf.clld.org/v1.0/terms.rdf#id) | `string` | Primary key
 [Name](http://cldf.clld.org/v1.0/terms.rdf#name) | `string` | A rough gloss for a concept set, serving as convenient abbreviation of its definition.
 [Description](http://cldf.clld.org/v1.0/terms.rdf#description) | `string` | A definition of the unifying aspect of the concepts grouped in the concept set.
+[ColumnSpec](http://cldf.clld.org/v1.0/terms.rdf#columnSpec) | `json` | 
 `Semantic_Field` | `string` | A categorization of concept sets into the semantic fields defined in the Intercontinental Dictionary Series (IDS).
 `Ontological_Category` | `string` | A rough ontological categorization to be used for navigating and filtering concept sets.
 [Replacement_ID](http://cldf.clld.org/v1.0/terms.rdf#parameterReference) | `string` | For superseded concept sets, this links to the concept set which replaces the one specified in this row.<br>References [concepticon.csv::ID](#table-concepticoncsv)
@@ -70,7 +71,7 @@ Name/Property | Datatype | Description
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF ContributionTable](http://cldf.clld.org/v1.0/terms.rdf#ContributionTable)
-[dc:extent](http://purl.org/dc/terms/extent) | 413
+[dc:extent](http://purl.org/dc/terms/extent) | 424
 
 
 ### Columns
@@ -141,7 +142,7 @@ Relations between concept sets.
 
 property | value
  --- | ---
-[dc:extent](http://purl.org/dc/terms/extent) | 1552
+[dc:extent](http://purl.org/dc/terms/extent) | 1554
 
 
 ### Columns
@@ -158,7 +159,7 @@ Name/Property | Datatype | Description
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF MediaTable](http://cldf.clld.org/v1.0/terms.rdf#MediaTable)
-[dc:extent](http://purl.org/dc/terms/extent) | 164
+[dc:extent](http://purl.org/dc/terms/extent) | 168
 
 
 ### Columns
@@ -170,6 +171,7 @@ Name/Property | Datatype | Description
 [Description](http://cldf.clld.org/v1.0/terms.rdf#description) | `string` | 
 [Media_Type](http://cldf.clld.org/v1.0/terms.rdf#mediaType) | `string` | 
 [Download_URL](http://cldf.clld.org/v1.0/terms.rdf#downloadUrl) | `anyURI` | 
+[Path_In_Zip](http://cldf.clld.org/v1.0/terms.rdf#pathInZip) | `string` | 
 
 ## <a name="table-conceptscsv"></a>Table [concepts.csv](./concepts.csv)
 
@@ -177,7 +179,7 @@ This table lists concepts as they appear in published concept lists. Each concep
 
 property | value
  --- | ---
-[dc:extent](http://purl.org/dc/terms/extent) | 116577
+[dc:extent](http://purl.org/dc/terms/extent) | 120757
 
 
 ### Columns

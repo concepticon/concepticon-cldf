@@ -31,26 +31,26 @@
         {
             "rdf:about": "https://github.com/concepticon/concepticon-cldf",
             "rdf:type": "prov:Entity",
-            "dc:created": "1495762",
+            "dc:created": "v3.0.0",
             "dc:title": "Repository"
         },
         {
             "rdf:about": "https://github.com/glottolog/glottolog",
             "rdf:type": "prov:Entity",
-            "dc:created": "v4.6",
+            "dc:created": "v4.7",
             "dc:title": "Glottolog"
         },
         {
             "rdf:about": "https://github.com/concepticon/concepticon-data",
             "rdf:type": "prov:Entity",
-            "dc:created": "v3.0.0",
+            "dc:created": "v3.1.0",
             "dc:title": "Repository"
         }
     ],
     "prov:wasGeneratedBy": [
         {
             "dc:title": "python",
-            "dc:description": "3.8.10"
+            "dc:description": "3.10.6"
         },
         {
             "dc:title": "python-packages",
@@ -63,7 +63,7 @@
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
             "dc:description": "Glosses (aka concept labels) in particular languages given for concepts in a concept list",
-            "dc:extent": 191422,
+            "dc:extent": 195696,
             "tableSchema": {
                 "columns": [
                     {
@@ -154,7 +154,7 @@
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ParameterTable",
             "dc:description": "The Concepticon - i.e. the list of concept sets to which individual concepts given in concept lists are mapped.",
-            "dc:extent": 3964,
+            "dc:extent": 3968,
             "tableSchema": {
                 "columns": [
                     {
@@ -179,6 +179,12 @@
                         "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#description",
                         "required": false,
                         "name": "Description"
+                    },
+                    {
+                        "datatype": "json",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#columnSpec",
+                        "required": false,
+                        "name": "ColumnSpec"
                     },
                     {
                         "dc:description": "A categorization of concept sets into the semantic fields defined in the Intercontinental Dictionary Series (IDS).",
@@ -223,7 +229,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ContributionTable",
-            "dc:extent": 413,
+            "dc:extent": 424,
             "tableSchema": {
                 "columns": [
                     {
@@ -485,7 +491,7 @@
         },
         {
             "dc:description": "Relations between concept sets.",
-            "dc:extent": 1552,
+            "dc:extent": 1554,
             "tableSchema": {
                 "columns": [
                     {
@@ -545,7 +551,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#MediaTable",
-            "dc:extent": 164,
+            "dc:extent": 168,
             "tableSchema": {
                 "columns": [
                     {
@@ -570,7 +576,10 @@
                         "name": "Description"
                     },
                     {
-                        "datatype": "string",
+                        "datatype": {
+                            "base": "string",
+                            "format": "[^/]+/.+"
+                        },
                         "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#mediaType",
                         "required": true,
                         "name": "Media_Type"
@@ -580,6 +589,12 @@
                         "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#downloadUrl",
                         "required": false,
                         "name": "Download_URL"
+                    },
+                    {
+                        "datatype": "string",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#pathInZip",
+                        "required": false,
+                        "name": "Path_In_Zip"
                     }
                 ],
                 "primaryKey": [
@@ -590,7 +605,7 @@
         },
         {
             "dc:description": "This table lists concepts as they appear in published concept lists. Each concept is linked to a concept list and a concept set (possibly the <NA> set).",
-            "dc:extent": 116577,
+            "dc:extent": 120757,
             "tableSchema": {
                 "columns": [
                     {

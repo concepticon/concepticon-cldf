@@ -1551,3 +1551,5 @@ ID,Source_ID,Relation_ID,Target_ID
 3924-broader-1553,3924,broader,1553
 619-narrower-3924,619,narrower,3924
 3924-broader-619,3924,broader,619
+1229-narrower-2113,1229,narrower,2113
+2113-broader-1229,2113,broader,1229

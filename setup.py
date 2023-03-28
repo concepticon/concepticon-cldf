@@ -18,6 +18,8 @@ setup(
         'clldutils>=3.13.0',
         'csvw>=3.1.2',
         'cldfbench',
+        'pyglottolog',
+        'networkx',
     ],
     extras_require={
         'test': [

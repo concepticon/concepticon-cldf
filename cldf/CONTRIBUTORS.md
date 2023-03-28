@@ -7,6 +7,9 @@ Period | Name
 2013- | Johann Mattis List
 2020- | Annika Tjuka
 2013-2018 | Michael Cysouw
+2023- | Mathilda van Zantwijk
+2023- | Frederic Blum
+2023- | Carlos Barrientos Ugarte
 2019- | Christoph Rzymski
 2017- | Simon Greenhill
 2019-2022 | Nathanael Schweikhard
@@ -27,7 +30,7 @@ which funding agency.
 
 Period    | Grant Name                                                     | Grant Type                                        | Funding Agency                                        | Grant Number | Beneficiaries
 ---       | ---                                                            | ---                                               | ---                                                   | --- | ---
-2022-2024 | [CALC³](https://digling.org/calc) | | Max Planck Society | JML 
+2022-2024 | [CALC³](https://digling.org/calc) | | Max Planck Society |  | JML 
 2012-2014 | *Quantitative modelling of historical-comparative linguistics* | ERC Starting Grant                                | European Research Council                             | 240816       | MC, JML
 2015-2016 | *Vertical and lateral aspects of Chinese dialect history*      | Research Fellowship                               | German Research Council                               | 261553824    | JML
 2017-2022 | [*Computer-Assisted Language Comparison*](http://calc.digling.org)      | ERC Starting Grant                              | European Research Council                               | [206320](https://cordis.europa.eu/project/rcn/206320/factsheet/en)    | JML
@@ -64,6 +67,7 @@ Anthony Grant | MS | 1.1
 Ayten Tüfekci | CL | 2.5
 Ben Yackley | P | 1.1
 Bryan Allen | C | 3.0
+Carlos Barrientos Ugarte | LGR | 3.0
 Carlotta Kintscher | C | 2.5
 Carolin Hundt | DCTLPG | 2.3, 2.4
 Christoph Rzymski | CLPG | 1.1
@@ -76,6 +80,7 @@ Doug Cooper | DCSM | 1.1, 2.1
 Evgeniya Korovina | MDSCLPA | 1.1, 2.2, 3.0
 Fabio Fromme | CL | 2.5
 Fiona Grond | CL | 2.5
+Fiona M. Wilson | MD | 3.1
 Franz Manni | A | 2.5
 Frederic Blum | GR | 2.5, 3.0
 Frederike Urke | CLS | 1.0
@@ -105,6 +110,7 @@ Natalia Morozowa | DCPTL | 2.0, 2.1, 2.2
 Nathan Hill | MSDP | 1.1, 2.3
 Nathan Statezni | D | 2.4
 Nicholas Evans | A | 1.0
+Panayiotis Pappas | MD | 3.1
 Paul Heggarty | D | 1.0
 Quentin Atkinson | MD | 1.1
 Robert Blust | D | 1.0

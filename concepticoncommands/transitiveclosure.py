@@ -25,13 +25,13 @@ def run(args):
         csets_by_name[r['Name']] = int(r['ID'])
     g = DiGraph()
     nodes = set()
-    for row in cldf['conceptrelations.csv']:
-        if row['Relation_ID'] == args.relation:
-            for key in ['Source_ID', 'Target_ID']:
+    for row in cldf['ParameterNetwork']:
+        if row['relation'] == args.relation:
+            for key in ['Source_Parameter_ID', 'Target_Parameter_ID']:
                 if row[key] not in nodes:
                     nodes.add(row[key])
                     g.add_node(int(row[key]))
-            g.add_edge(int(row['Source_ID']), int(row['Target_ID']))
+            g.add_edge(int(row['Source_Parameter_ID']), int(row['Target_Parameter_ID']))
     nid = csets_by_name[args.gloss_or_id] \
         if args.gloss_or_id in csets_by_name else int(args.gloss_or_id)
     for e in transitive_closure(g).edges(nid):

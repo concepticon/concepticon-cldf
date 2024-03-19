@@ -3,7 +3,10 @@
 [CLDF](https://cldf.clld.org) is a package format for linguistic data, bundling a set of tables as CSV files
 with JSON metadata, describing - among other things - relations between these tables.
 
-First, familiarize yourself with the data model by looking through [cldf/README.md](../cldf/README.md).
+First, familiarize yourself with the data model by looking through [cldf/README.md](../cldf/README.md)
+and the entity-relationship diagram below.
+
+![](erd.svg)
 
 
 ## It's all just text files!
@@ -17,12 +20,12 @@ You can list the files in the dataset
 $ ls -1 cldf
 concepticon.csv
 conceptlists.csv
-conceptrelations.csv
 concepts.csv
 CONTRIBUTORS.md
 glosses.csv
 languages.csv
 media.csv
+parameter_network.csv
 README.md
 relationtypes.csv
 requirements.txt
@@ -135,15 +138,16 @@ Swadesh-1955-100-4|belly|BELLY
 Swadesh-1955-100-5|big|BIG
 ... | ... | ...
 
-SQLite can also help with querying the graph of relations between conceptsets. E.g. all conceptsets that are *narrower*
+SQLite can also help with querying the graph of relations between conceptsets which are modeled as
+edges, i.e. rows in the `ParameterNetwork` table. E.g. all conceptsets that are *narrower*
 than `BROTHER` can be found using the following [recursive common table expression](https://www.sqlite.org/lang_with.html#recursivecte):
 ```sql
 WITH RECURSIVE
   narrower(n) AS (
     SELECT cldf_id FROM ParameterTable WHERE cldf_name = 'BROTHER'
     UNION
-    SELECT Source_ID FROM `conceptrelations.csv`, narrower
-     WHERE `conceptrelations.csv`.Target_ID=narrower.n AND `conceptrelations.csv`.Relation_ID = 'broader'
+    SELECT cldf_sourceParameterReference FROM ParameterNetwork, narrower
+     WHERE ParameterNetwork.cldf_targetParameterReference=narrower.n AND ParameterNetwork.relation = 'broader'
   )
 SELECT cldf_id, cldf_name FROM ParameterTable
  WHERE cldf_id IN narrower;
@@ -160,6 +164,43 @@ cldf_id|cldf_name
 2417|YOUNGER BROTHER (OF WOMAN)
 559|BROTHER (OF MAN)
 560|BROTHER (OF WOMAN)
+
+We might also investigate conceptsets with a large number of concepts with english glosses differing
+from the "default" Concepticon gloss using a query like
+```sql
+SELECT
+    concepticon_id, concepticon_gloss, gloss, max(c) AS ngloss
+FROM (
+    SELECT
+        p.cldf_id AS concepticon_id,
+        p.cldf_name AS concepticon_gloss,
+        c.cldf_name AS gloss,
+        count(c.cldf_id) AS c
+    FROM
+        parametertable AS p,
+        `concepts.csv` AS c,
+        formtable AS f
+    WHERE
+        c.cldf_parameterreference = p.cldf_id AND
+        f.concept_id = c.cldf_id AND
+        f.cldf_languagereference = 'english'
+    GROUP BY p.cldf_id, c.cldf_name
+) AS q
+WHERE
+    lower(concepticon_gloss) != lower(gloss) AND
+    cast(concepticon_id as int) != 0
+GROUP BY concepticon_id
+HAVING ngloss > 5
+ORDER BY cast(concepticon_id AS int) LIMIT 5;
+```
+
+concepticon_id | concepticon_gloss | gloss | ngloss
+---:| --- | --- | ---:
+2|DUST|the dust|6
+12|MIDDAY|noon|39
+21|TASTE (SOMETHING)|taste|15
+24|PRAY|to pray|7
+38|SPREAD OUT|spread|7
 
 
 ## Dataset commands

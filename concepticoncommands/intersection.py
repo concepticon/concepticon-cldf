@@ -127,11 +127,11 @@ def run(args):
 def fetch_broader(cu, cids):
     cu.execute(
         " UNION ".join([
-            "SELECT Target_ID FROM `conceptrelations.csv` WHERE Source_ID = ?" for _ in cids]),
+            "SELECT cldf_targetParameterReference FROM ParameterNetwork WHERE cldf_sourceParameterReference = ?" for _ in cids]),
         cids)
     res = cu.fetchall()
     assert len(res) == 1
-    cu.execute("SELECT cldf_id, cldf_name FROM parametertable WHERE cldf_ID = ?", (res[0][0],))
+    cu.execute("SELECT cldf_id, cldf_name FROM parametertable WHERE cldf_id = ?", (res[0][0],))
     return cu.fetchone()
 
 
@@ -161,21 +161,21 @@ WITH RECURSIVE
         SELECT ?, 0
         UNION ALL
         SELECT
-            Source_ID, rel.level + 1
+            cldf_sourceParameterReference, rel.level + 1
         FROM
-            `conceptrelations.csv`, rel
+            ParameterNetwork, rel
         WHERE
-            `conceptrelations.csv`.Target_ID = rel.n AND `conceptrelations.csv`.Relation_ID = ?
+            ParameterNetwork.cldf_targetParameterReference = rel.n AND ParameterNetwork.relation = ?
     ),
     inv(n, level) AS (
         SELECT ?, 0
         UNION ALL
         SELECT
-            Source_ID, inv.level - 1
+            cldf_sourceParameterReference, inv.level - 1
         FROM
-            `conceptrelations.csv`, inv
+            ParameterNetwork, inv
         WHERE
-            `conceptrelations.csv`.Target_ID = inv.n AND `conceptrelations.csv`.Relation_ID = ?
+            ParameterNetwork.cldf_targetParameterReference = inv.n AND ParameterNetwork.relation = ?
     )
 SELECT DISTINCT n.level AS l, n.n, p.cldf_name FROM rel as n, ParameterTable as p WHERE n.n = p.cldf_id AND n.level <= ?
 UNION

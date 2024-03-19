@@ -1,5 +1,11 @@
 # Changes
 
+## [v3.2.0]
+
+- 17 new concept lists.
+- Conceptset relations are now modeled using CLDF 1.3's ParameterNetwork component.
+
+
 ## [v3.1.0]
 
 11 new concept lists.

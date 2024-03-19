@@ -31,26 +31,26 @@
         {
             "rdf:about": "https://github.com/concepticon/concepticon-cldf",
             "rdf:type": "prov:Entity",
-            "dc:created": "v3.0.0",
+            "dc:created": "v3.1.0",
             "dc:title": "Repository"
         },
         {
             "rdf:about": "https://github.com/glottolog/glottolog",
             "rdf:type": "prov:Entity",
-            "dc:created": "v4.7",
+            "dc:created": "v5.0",
             "dc:title": "Glottolog"
         },
         {
             "rdf:about": "https://github.com/concepticon/concepticon-data",
             "rdf:type": "prov:Entity",
-            "dc:created": "v3.1.0",
+            "dc:created": "v3.2.0",
             "dc:title": "Repository"
         }
     ],
     "prov:wasGeneratedBy": [
         {
             "dc:title": "python",
-            "dc:description": "3.10.6"
+            "dc:description": "3.10.12"
         },
         {
             "dc:title": "python-packages",
@@ -63,7 +63,7 @@
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
             "dc:description": "Glosses (aka concept labels) in particular languages given for concepts in a concept list",
-            "dc:extent": 195696,
+            "dc:extent": 206775,
             "tableSchema": {
                 "columns": [
                     {
@@ -154,7 +154,7 @@
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ParameterTable",
             "dc:description": "The Concepticon - i.e. the list of concept sets to which individual concepts given in concept lists are mapped.",
-            "dc:extent": 3968,
+            "dc:extent": 3971,
             "tableSchema": {
                 "columns": [
                     {
@@ -229,7 +229,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ContributionTable",
-            "dc:extent": 424,
+            "dc:extent": 441,
             "tableSchema": {
                 "columns": [
                     {
@@ -454,7 +454,7 @@
         },
         {
             "dc:description": "Types of relations between concept sets.",
-            "dc:extent": 14,
+            "dc:extent": 15,
             "tableSchema": {
                 "columns": [
                     {
@@ -490,68 +490,8 @@
             "url": "relationtypes.csv"
         },
         {
-            "dc:description": "Relations between concept sets.",
-            "dc:extent": 1554,
-            "tableSchema": {
-                "columns": [
-                    {
-                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#id",
-                        "name": "ID"
-                    },
-                    {
-                        "name": "Source_ID"
-                    },
-                    {
-                        "name": "Relation_ID"
-                    },
-                    {
-                        "name": "Target_ID"
-                    }
-                ],
-                "foreignKeys": [
-                    {
-                        "columnReference": [
-                            "Source_ID"
-                        ],
-                        "reference": {
-                            "resource": "concepticon.csv",
-                            "columnReference": [
-                                "ID"
-                            ]
-                        }
-                    },
-                    {
-                        "columnReference": [
-                            "Relation_ID"
-                        ],
-                        "reference": {
-                            "resource": "relationtypes.csv",
-                            "columnReference": [
-                                "ID"
-                            ]
-                        }
-                    },
-                    {
-                        "columnReference": [
-                            "Target_ID"
-                        ],
-                        "reference": {
-                            "resource": "concepticon.csv",
-                            "columnReference": [
-                                "ID"
-                            ]
-                        }
-                    }
-                ],
-                "primaryKey": [
-                    "ID"
-                ]
-            },
-            "url": "conceptrelations.csv"
-        },
-        {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#MediaTable",
-            "dc:extent": 168,
+            "dc:extent": 170,
             "tableSchema": {
                 "columns": [
                     {
@@ -605,7 +545,7 @@
         },
         {
             "dc:description": "This table lists concepts as they appear in published concept lists. Each concept is linked to a concept list and a concept set (possibly the <NA> set).",
-            "dc:extent": 120757,
+            "dc:extent": 131335,
             "tableSchema": {
                 "columns": [
                     {
@@ -713,6 +653,94 @@
                 ]
             },
             "url": "retired.csv"
+        },
+        {
+            "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ParameterNetwork",
+            "dc:description": "Rows in this table describe edges in a network of parameters.",
+            "dc:extent": 90386,
+            "tableSchema": {
+                "columns": [
+                    {
+                        "datatype": {
+                            "base": "string",
+                            "format": "[a-zA-Z0-9_\\-]+"
+                        },
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#id",
+                        "required": true,
+                        "name": "ID"
+                    },
+                    {
+                        "datatype": "string",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#description",
+                        "required": false,
+                        "name": "Description"
+                    },
+                    {
+                        "dc:description": "References the target node of the edge.",
+                        "datatype": "string",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#targetParameterReference",
+                        "required": true,
+                        "name": "Target_Parameter_ID"
+                    },
+                    {
+                        "dc:description": "References the source node of the edge.",
+                        "datatype": "string",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#sourceParameterReference",
+                        "required": true,
+                        "name": "Source_Parameter_ID"
+                    },
+                    {
+                        "dc:description": "Flag signaling whether the edge is directed or undirected.",
+                        "datatype": {
+                            "base": "boolean",
+                            "format": "Yes|No"
+                        },
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#edgeIsDirected",
+                        "required": false,
+                        "name": "Edge_Is_Directed"
+                    },
+                    {
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#contributionReference",
+                        "name": "Contribution_ID"
+                    },
+                    {
+                        "dc:description": "The type of relation between the two parameters.",
+                        "name": "relation"
+                    },
+                    {
+                        "datatype": "json",
+                        "name": "data"
+                    }
+                ],
+                "foreignKeys": [
+                    {
+                        "columnReference": [
+                            "Contribution_ID"
+                        ],
+                        "reference": {
+                            "resource": "conceptlists.csv",
+                            "columnReference": [
+                                "ID"
+                            ]
+                        }
+                    },
+                    {
+                        "columnReference": [
+                            "relation"
+                        ],
+                        "reference": {
+                            "resource": "relationtypes.csv",
+                            "columnReference": [
+                                "ID"
+                            ]
+                        }
+                    }
+                ],
+                "primaryKey": [
+                    "ID"
+                ]
+            },
+            "url": "parameter_network.csv"
         }
     ]
 }

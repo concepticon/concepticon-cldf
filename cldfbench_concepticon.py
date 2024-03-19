@@ -8,17 +8,17 @@ import collections
 
 from cldfbench import Dataset as BaseDataset, CLDFSpec
 from pycldf.sources import Source
-from clldutils.markup import MarkdownLink
+from clldutils.markup import MarkdownLink, add_markdown_text
 from clldutils.jsonlib import load, dump
 from pyconcepticon import Concepticon
-from pyconcepticon.models import Languoid
+from pyconcepticon.models import Languoid, CONCEPT_NETWORK_COLUMNS
 from pybtex.database import parse_string
 from rfc3986 import URIReference
 
 # FIXME: The following should probably go into Glottolog.
 COORDS = {
     'southafricanenglish': (-32.47, 25.39),
-    'northamericanenglish': (39.10, -101.80),
+    'americanenglish': (39.10, -101.80),
     'lebanesearabic': (33.96, 35.49),
 }
 # Missing data (in the sources) is marked using a dash. We don't import these markers in
@@ -53,9 +53,13 @@ This CLDF dataset provides the data of the corresponding release of
 It is intended to replace the former method of accessing Concepticon data via `pyconcepticon`
 with the various data access options available with [CLDF](https://github.com/cldf/cookbook/).
 For some guidance on how to do that, see the examples in [doc](doc/).
+
+The gloss languages used in the conceptlists from which Concepticon conceptsets have been aggregated
+are shown on the map below.
+
+![](map.svg)
 """
-        pre, head, post = super().cmd_readme(args).partition('## CLDF ')
-        return pre + desc + head + post
+        return add_markdown_text(super().cmd_readme(args), desc, 'Description')
 
     def schema(self, cldf, api):
         t = cldf.add_component('LanguageTable')
@@ -110,19 +114,7 @@ For some guidance on how to do that, see the examples in [doc](doc/).
         )
         t.common_props['dc:description'] = "Types of relations between concept sets."
         cldf.add_foreign_key('relationtypes.csv', 'Inverse_ID', 'relationtypes.csv', 'ID')
-        t = cldf.add_table(
-            'conceptrelations.csv',
-            {
-                "name": "ID",
-                "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#id"},
-            {"name": "Source_ID"},
-            {"name": "Relation_ID"},
-            {"name": "Target_ID"},
-        )
-        t.common_props['dc:description'] = "Relations between concept sets."
-        cldf.add_foreign_key('conceptrelations.csv', 'Source_ID', 'ParameterTable', 'ID')
-        cldf.add_foreign_key('conceptrelations.csv', 'Relation_ID', 'relationtypes.csv', 'ID')
-        cldf.add_foreign_key('conceptrelations.csv', 'Target_ID', 'ParameterTable', 'ID')
+
         cldf.add_columns(
             'ContributionTable',
             {
@@ -230,6 +222,20 @@ For some guidance on how to do that, see the examples in [doc](doc/).
             'Type',
             'Replacement_ID',
         )
+        cldf.add_component(
+            'ParameterNetwork',
+            {
+                "name": "Contribution_ID",
+                "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#contributionReference"},
+            {
+                'name': 'relation',
+                'dc:description': 'The type of relation between the two parameters.',
+                },
+            {
+                'name': 'data',
+                'datatype': 'json'},
+        )
+        cldf.add_foreign_key('ParameterNetwork', 'relation', 'relationtypes.csv', 'ID')
 
     def cmd_makecldf(self, args):
         cdata = self.raw_dir / 'concepticon-data'
@@ -280,8 +286,11 @@ For some guidance on how to do that, see the examples in [doc](doc/).
                 args.writer.objects['LanguageTable'].append(dict(
                     ID=lg.name,
                     Name=glang.name if glang else lg.name,
-                    Latitude=glang.latitude if glang else COORDS.get(lg.name, (None, None))[0],
-                    Longitude=glang.longitude if glang else COORDS.get(lg.name, (None, None))[1],
+                    Glottocode=glang.id if glang else None,
+                    Latitude=glang.latitude if glang and glang.latitude else
+                        COORDS.get(lg.name, (None, None))[0],
+                    Longitude=glang.longitude if glang and glang.longitude else
+                        COORDS.get(lg.name, (None, None))[1],
                 ))
                 lids.add(lg.name)
         for k, v in api.vocabularies['TAGS'].items():
@@ -316,26 +325,34 @@ For some guidance on how to do that, see the examples in [doc](doc/).
                 inverses[spec['inverseof']] = rid
             args.writer.objects['relationtypes.csv'].append(dict(
                 ID=rid, Description=spec['definition'], Inverse_ID=spec.get('inverseof')))
+        args.writer.objects['relationtypes.csv'].append(dict(
+            ID='linked',
+            Description='A (possibly directed) link posited in a conceptlist',
+            Inverse_ID=None))
 
         seen = set()
         for row in api.multirelations.raw:
             rid = '{}-{}-{}'.format(row['SOURCE'], row['RELATION'], row['TARGET'])
             if rid not in seen:
-                args.writer.objects['conceptrelations.csv'].append(dict(
+                args.writer.objects['ParameterNetwork'].append(dict(
                     ID=rid,
-                    Source_ID=row['SOURCE'],
-                    Relation_ID=row['RELATION'],
-                    Target_ID=row['TARGET'],
+                    Source_Parameter_ID=row['SOURCE'],
+                    Description=row['RELATION'],
+                    relation=row['RELATION'],
+                    Target_Parameter_ID=row['TARGET'],
+                    Edge_Is_Directed=True,
                 ))
                 seen.add(rid)
             if row['RELATION'] in inverses:
                 rid = '{}-{}-{}'.format(row['TARGET'], inverses[row['RELATION']], row['SOURCE'])
                 if rid not in seen:
-                    args.writer.objects['conceptrelations.csv'].append(dict(
+                    args.writer.objects['ParameterNetwork'].append(dict(
                         ID=rid,
-                        Source_ID=row['TARGET'],
-                        Relation_ID=inverses[row['RELATION']],
-                        Target_ID=row['SOURCE'],
+                        Source_Parameter_ID=row['TARGET'],
+                        Description=inverses[row['RELATION']],
+                        relation=inverses[row['RELATION']],
+                        Target_Parameter_ID=row['SOURCE'],
+                        Edge_Is_Directed=True,
                     ))
                     seen.add(rid)
 
@@ -370,9 +387,20 @@ For some guidance on how to do that, see the examples in [doc](doc/).
                 Alias=cl.alias,
             ))
 
+            #
+            # Collect network information!
+            network = {n: [] for n in CONCEPT_NETWORK_COLUMNS}
+            concept_to_concepticon = {}  # Need to map local concepts to global parameters!
+            #
             for i, c in enumerate(sorted(cl.concepts.values(), key=ckey), start=1):
                 data = collections.OrderedDict(
                     [(k, v) for k, v in c.attributes.items() if v is not None])
+                concept_to_concepticon[c.id] = c.concepticon_id
+                for col in CONCEPT_NETWORK_COLUMNS:
+                    if col.lower() in data:
+                        assert isinstance(data[col.lower()], list)
+                        for obj in data[col.lower()]:
+                            network[col].append((c.id, obj))
                 forms = {'english': c.english} if c.english and 'english' in slangs else {}
                 for k, v in list(data.items()):
                     if k in slangs:
@@ -404,6 +432,22 @@ For some guidance on how to do that, see the examples in [doc](doc/).
                             Parameter_ID=c.concepticon_id or '0',
                             Language_ID=lid,
                             Concept_ID=c.id,
+                        ))
+
+            x = 0
+            for col, edges in network.items():
+                for sid, obj in edges:
+                    if concept_to_concepticon[sid] and concept_to_concepticon[obj['ID']]:
+                        x += 1
+                        args.writer.objects['ParameterNetwork'].append(dict(
+                            ID='{}-{}'.format(cl.id, x),
+                            Contribution_ID=cl.id,
+                            Source_Parameter_ID=concept_to_concepticon[sid],
+                            Target_Parameter_ID=concept_to_concepticon[obj['ID']],
+                            Description=cl.id,
+                            relation='linked',
+                            Edge_Is_Directed=CONCEPT_NETWORK_COLUMNS[col],
+                            data=obj,
                         ))
 
         for obj_type, retirements in api.retirements.items():

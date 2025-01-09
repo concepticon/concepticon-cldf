@@ -3,7 +3,7 @@
 - Make sure the corresponding release of (the submodule) `raw/concepticon-data` is checked out.
 - Re-create the CLDF data running
   ```shell
-  cldfbench makecldf --with-cldfreadme cldfbench_concepticon.py --glottolog-version v5.0
+  cldfbench makecldf --with-cldfreadme cldfbench_concepticon.py --glottolog-version v5.1
   ```
 - Make sure the dataset is valid running
   ```shell

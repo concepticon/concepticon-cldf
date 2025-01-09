@@ -7,8 +7,9 @@ Period | Name
 2013- | Johann Mattis List
 2020- | Annika Tjuka
 2013-2018 | Michael Cysouw
-2023- | Mathilda van Zantwijk
+2023-2024 | Mathilda van Zantwijk
 2023- | Frederic Blum
+2025- | Alžběta Kučerová 
 2023- | Carlos Barrientos Ugarte
 2019- | Christoph Rzymski
 2017- | Simon Greenhill
@@ -96,6 +97,7 @@ Joshua Conrad Jackson | DM | 2.4
 Julia Fischer | SDT | 1.0
 Katja Bocklage | LP | 3.2
 Katja Sirges | C | 2.5
+Kellen Parker van Dam | MSDCG | 3.3
 Kristina Pianykh | DCTLP | 2.1
 Lars Borin | DL | 1.0
 Magdalena Łuniewska | D | 1.1
@@ -108,6 +110,7 @@ Mateus Alves Motta | CTLG | 2.6
 Maurizio Serva | MD | 1.1
 Mei-Shin Wu | CTLG | 1.2, 2.0, 2.1, 2.2
 Michael Dunn | G | 1.1
+Ahmedovic, Mira | CLPG | 3.3 
 Muhammad Zakaria | L | 2.4
 Natalia Morozowa | DCPTL | 2.0, 2.1, 2.2
 Nathan Hill | MSDP | 1.1, 2.3
@@ -116,6 +119,7 @@ Nicholas Evans | A | 1.0
 Panayiotis Pappas | MD | 3.1
 Paul Heggarty | D | 1.0
 Quentin Atkinson | MD | 1.1
+Riccardo Rost | CLP | 3.3
 Robert Blust | D | 1.0
 Sandra Auderset | LG | 2.4
 Sean Lee | D | 1.0

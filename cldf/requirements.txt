@@ -4,10 +4,11 @@ attrs==24.2.0
 babel==2.16.0
 bibtexparser==2.0.0b7
 bs4==0.0.2
+Cartopy==0.24.1
 certifi==2024.8.30
 chardet==5.2.0
 cldfbench==1.14.0
--e git+https://github.com/concepticon/concepticon-cldf@53a2ea5dbe12b0f63338b8e433c529ecbc4795bb#egg=cldfbench_concepticon
+-e git+https://github.com/concepticon/concepticon-cldf@c4fa9d6a713dcbcac525ddaa814b7b2f4ea34396#egg=cldfbench_concepticon
 cldfcatalog==1.5.1
 cldfviz==1.3.0
 cldfzenodo==2.1.2
@@ -47,6 +48,7 @@ pycountry==24.6.1
 pyglottolog==3.14.0
 pylatexenc==2.10
 pyparsing==3.2.0
+pyproj==3.7.0
 pytest==8.3.3
 python-dateutil==2.9.0.post0
 python-frontmatter==1.1.0
@@ -55,6 +57,7 @@ referencing==0.35.1
 reportlab==4.2.5
 requests==2.32.3
 rfc3986==1.5.0
+shapely==2.0.6
 six==1.16.0
 smmap==5.0.1
 soupsieve==2.6

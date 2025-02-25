@@ -1,6 +1,12 @@
 # Changes
 
 
+## [v3.4.0]
+
+- Added 2 conceptlists.
+- Baseline for a corresponding NoRaRe release.
+
+
 ## [v3.3.0]
 
 - Added 23 conceptlists.

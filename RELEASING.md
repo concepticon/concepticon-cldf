@@ -1,6 +1,11 @@
 # Releasing Concepticon as CLDF dataset
 
 - Make sure the corresponding release of (the submodule) `raw/concepticon-data` is checked out.
+- Run
+  ```shell
+  cldfbench download cldfbench_concepticon.py
+  ```
+  to fetch source documents from CDSTAR.
 - Re-create the CLDF data running
   ```shell
   cldfbench makecldf --with-cldfreadme cldfbench_concepticon.py --glottolog-version v5.1

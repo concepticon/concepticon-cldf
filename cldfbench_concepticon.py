@@ -5,6 +5,7 @@ import pathlib
 import functools
 import subprocess
 import collections
+import urllib.request
 
 from cldfbench import Dataset as BaseDataset, CLDFSpec
 from pycldf.sources import Source
@@ -42,9 +43,22 @@ class Dataset(BaseDataset):
             )
         )
 
+    @property
+    def concepticon_api(self):
+        return Concepticon(self.raw_dir / 'concepticon-data')
+
+    def iter_cl_sources(self):
+        src_dir = self.raw_dir.joinpath('sources')
+        src_dir.mkdir(exist_ok=True)
+        for k, v in self.concepticon_api.sources.items():
+            assert v['mimetype'] == 'application/pdf', v
+            yield k, v, src_dir / '{}.pdf'.format(k)
+
     def cmd_download(self, args):
-        subprocess.check_call(
-            'git -C {} pull --recurse-submodules'.format(self.dir.resolve()), shell=True)
+        for k, v, p in self.iter_cl_sources():
+            if not p.exists() or p.stat().st_size != v['size']:
+                args.log.info('downloading {}'.format(k))
+                urllib.request.urlretrieve(v['url'], p)
 
     def cmd_readme(self, args):
         desc = """
@@ -296,12 +310,16 @@ are shown on the map below.
         for k, v in api.vocabularies['TAGS'].items():
             args.writer.objects['tags.csv'].append(dict(ID=k, Description=v))
 
-        for ref in api.sources:
+        src_dir = self.cldf_dir / 'sources'
+        src_dir.mkdir(exist_ok=True)
+        for ref, v, p in self.iter_cl_sources():
+            assert p.exists()
+            shutil.copy(p, src_dir / p.name)
             args.writer.objects['MediaTable'].append(dict(
                 ID=ref,
-                Name=api.sources[ref]['original'],
-                Media_Type=api.sources[ref]['mimetype'],
-                Download_URL=api.sources[ref]['url'],
+                Name=v['original'],
+                Media_Type=v['mimetype'],
+                Download_URL='sources/{}'.format(p.name),
             ))
 
         args.writer.objects['ParameterTable'].append(dict(

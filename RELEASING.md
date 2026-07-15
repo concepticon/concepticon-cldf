@@ -25,7 +25,7 @@
   ```
 - Create a map showing the gloss languages:
   ```shell
-  cldfbench cldfviz.map --format svg --pacific-centered --no-legend cldf --with-ocean --padding-bottom 5 --padding-top 5 --width 20 --language-labels
+  cldfbench cldfviz.map --format svg --pacific-centered --no-legend cldf --with-ocean --padding-bottom 5 --padding-top 5 --width 25 --language-labels
   ```
 - Adapt `CHANGELOG.md`.
 - Commit the updates for this version and push updated data:

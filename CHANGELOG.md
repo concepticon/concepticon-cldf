@@ -1,6 +1,11 @@
 # Changes
 
 
+## [v3.4.1]
+
+Added source PDFs to the dataset.
+
+
 ## [v3.4.0]
 
 - Added 2 conceptlists.

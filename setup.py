@@ -15,11 +15,12 @@ setup(
         ]
     },
     install_requires=[
-        'pycldf>=1.37.1',
-        'clldutils>=3.13.0',
-        'csvw>=3.1.2',
-        'cldfbench',
-        'pyglottolog',
+        'pycldf>=2',
+        'clldutils>=4',
+        'csvw>=4',
+        'cldfbench>=2',
+        'pyglottolog>=4',
+        'simplepybtex',
         'networkx',
     ],
     extras_require={

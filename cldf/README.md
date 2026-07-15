@@ -17,7 +17,7 @@ property | value
 [dc:publisher](http://purl.org/dc/terms/publisher) | <dl><dt>http://xmlns.com/foaf/0.1/name</dt><dd>Max Planck Institute for Evolutionary Anthropology</dd><dt><a href="http://purl.org/dc/terms/Location">dc:Location</a></dt><dd>Leipzig</dd><dt>http://xmlns.com/foaf/0.1/homepage</dt><dd>https://www.eva.mpg.de</dd><dt>http://xmlns.com/foaf/0.1/mbox</dt><dd>concepticon@eva.mpg.de</dd></dl>
 [dc:relation](http://purl.org/dc/terms/relation) | http://www.lrec-conf.org/proceedings/lrec2016/summaries/127.html
 [dcat:accessURL](http://www.w3.org/ns/dcat#accessURL) | https://concepticon.clld.org
-[prov:wasDerivedFrom](http://www.w3.org/ns/prov#wasDerivedFrom) | <ol><li><a href="https://github.com/concepticon/concepticon-cldf/tree/v3.3.0">concepticon/concepticon-cldf v3.3.0</a></li><li><a href="https://github.com/glottolog/glottolog/tree/v5.1">Glottolog v5.1</a></li><li><a href="https://github.com/concepticon/concepticon-data/tree/ad44e5e0">concepticon/concepticon-data v3.3.0-26-gad44e5e0</a></li></ol>
+[prov:wasDerivedFrom](http://www.w3.org/ns/prov#wasDerivedFrom) | <ol><li><a href="https://github.com/concepticon/concepticon-cldf/tree/568d3f1">concepticon/concepticon-cldf  v3.4.0-1-g568d3f1</a></li><li><a href="https://github.com/glottolog/glottolog/tree/v5.3">Glottolog  v5.3</a></li><li><a href="https://github.com/concepticon/concepticon-data/tree/v3.4.0">concepticon/concepticon-data  v3.4.0</a></li></ol>
 [prov:wasGeneratedBy](http://www.w3.org/ns/prov#wasGeneratedBy) | <ol><li><strong>python</strong>: 3.12.3</li><li><strong>python-packages</strong>: <a href="./requirements.txt">requirements.txt</a></li></ol>
 [rdf:ID](http://www.w3.org/1999/02/22-rdf-syntax-ns#ID) | concepticon
 [rdf:type](http://www.w3.org/1999/02/22-rdf-syntax-ns#type) | http://www.w3.org/ns/dcat#Distribution
@@ -62,8 +62,8 @@ Name/Property | Datatype | Description
 [Name](http://cldf.clld.org/v1.0/terms.rdf#name) | `string` | A rough gloss for a concept set, serving as convenient abbreviation of its definition.
 [Description](http://cldf.clld.org/v1.0/terms.rdf#description) | `string` | A definition of the unifying aspect of the concepts grouped in the concept set.
 [ColumnSpec](http://cldf.clld.org/v1.0/terms.rdf#columnSpec) | `json` | 
-`Semantic_Field` | `string`<br>Regex: `Agriculture\ and\ vegetation|Animals|Basic\ actions\ and\ technology|Clothing\ and\ grooming|Cognition|Emotions\ and\ values|Food\ and\ drink|Kinship|Law|Miscellaneous\ function\ words|Modern\ world|Motion|Possession|Quantity|Religion\ and\ belief|Sense\ perception|Social\ and\ political\ relations|Spatial\ relations|Speech\ and\ language|The\ body|The\ house|The\ physical\ world|Time|Warfare\ and\ hunting` | A categorization of concept sets into the semantic fields defined in the Intercontinental Dictionary Series (IDS).
-`Ontological_Category` | `string`<br>Regex: `Action/Process|Person/Thing|Classifier|Property|Number|Other` | A rough ontological categorization to be used for navigating and filtering concept sets.
+`Semantic_Field` | `string`<br>Regex: `Agriculture\ and\ vegetation\|Animals\|Basic\ actions\ and\ technology\|Clothing\ and\ grooming\|Cognition\|Emotions\ and\ values\|Food\ and\ drink\|Kinship\|Law\|Miscellaneous\ function\ words\|Modern\ world\|Motion\|Possession\|Quantity\|Religion\ and\ belief\|Sense\ perception\|Social\ and\ political\ relations\|Spatial\ relations\|Speech\ and\ language\|The\ body\|The\ house\|The\ physical\ world\|Time\|Warfare\ and\ hunting` | A categorization of concept sets into the semantic fields defined in the Intercontinental Dictionary Series (IDS).
+`Ontological_Category` | `string`<br>Regex: `Action/Process\|Person/Thing\|Classifier\|Property\|Number\|Other` | A rough ontological categorization to be used for navigating and filtering concept sets.
 [Replacement_ID](http://cldf.clld.org/v1.0/terms.rdf#parameterReference) | `string` | For superseded concept sets, this links to the concept set which replaces the one specified in this row.<br>References [concepticon.csv::ID](#table-concepticoncsv)
 
 ## <a name="table-conceptlistscsv"></a>Table [conceptlists.csv](./conceptlists.csv)
@@ -213,7 +213,7 @@ Rows in this table describe edges in a network of parameters.
 property | value
  --- | ---
 [dc:conformsTo](http://purl.org/dc/terms/conformsTo) | [CLDF ParameterNetwork](http://cldf.clld.org/v1.0/terms.rdf#ParameterNetwork)
-[dc:extent](http://purl.org/dc/terms/extent) | 90402
+[dc:extent](http://purl.org/dc/terms/extent) | 90428
 
 
 ### Columns
@@ -228,4 +228,3 @@ Name/Property | Datatype | Description
 [Contribution_ID](http://cldf.clld.org/v1.0/terms.rdf#contributionReference) | `string` | References [conceptlists.csv::ID](#table-conceptlistscsv)
 `relation` | `string` | The type of relation between the two parameters.<br>References [relationtypes.csv::ID](#table-relationtypescsv)
 `data` | `json` | 
-

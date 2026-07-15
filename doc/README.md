@@ -45,7 +45,7 @@ and inspect the headers and data
 ```shell
 $ head -n 2 cldf/languages.csv 
 ID,Name,Macroarea,Latitude,Longitude,Glottocode,ISO639P3code
-afrikaans,Afrikaans,,-22.0,30.0,,
+afrikaans,Afrikaans,,-31.63272,20.46356,afri1274,
 ```
 
 
@@ -125,7 +125,7 @@ ORDER BY
 ```
 via
 ```shell
-$ sqlite3 concepticon.sqlite -header < query.sql
+sqlite3 concepticon.sqlite -header < doc/query.sql
 ```
 to get
 
@@ -197,10 +197,10 @@ ORDER BY cast(concepticon_id AS int) LIMIT 5;
 concepticon_id | concepticon_gloss | gloss | ngloss
 ---:| --- | --- | ---:
 2|DUST|the dust|6
-12|MIDDAY|noon|39
-21|TASTE (SOMETHING)|taste|15
+12|MIDDAY|noon|40
+21|TASTE (SOMETHING)|taste|16
 24|PRAY|to pray|7
-38|SPREAD OUT|spread|7
+31|PAN|frying pan|9
 
 
 ## Dataset commands
@@ -230,7 +230,7 @@ Note that this took quite long (~20secs), because the implementation first loads
 [in-memory sqlite database](https://www.sqlite.org/inmemorydb.html).
 If we specify the database we already created above, this will run a lot quicker:
 ```shell
-f$ time cldfbench concepticon.intersection --db concepticon.sqlite Swadesh-1955-100 Swadesh-1952-200 --maxdist 2 --output-union | wc -l
+$ time cldfbench concepticon.intersection --db concepticon.sqlite Swadesh-1955-100 Swadesh-1952-200 --maxdist 2 --output-union | wc -l
 207
 real    0m1,512s
 ```

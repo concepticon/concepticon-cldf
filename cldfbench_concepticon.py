@@ -3,7 +3,6 @@ import shutil
 import decimal
 import pathlib
 import functools
-import subprocess
 import collections
 import urllib.request
 
@@ -13,7 +12,7 @@ from clldutils.markup import MarkdownLink, add_markdown_text
 from clldutils.jsonlib import load, dump
 from pyconcepticon import Concepticon
 from pyconcepticon.models import Languoid, CONCEPT_NETWORK_COLUMNS
-from pybtex.database import parse_string
+from simplepybtex.database import parse_string
 from rfc3986 import URIReference
 
 # FIXME: The following should probably go into Glottolog.
@@ -387,7 +386,7 @@ are shown on the map below.
             desc = MarkdownLink.replace(cl.note, functools.partial(biburl, cl.id))
             args.writer.objects['ContributionTable'].append(dict(
                 ID=cl.id,
-                Name='{} {}{}'.format(cl.author, cl.year, cl.list_suffix or ''),
+                Name=f"{cl.author} {cl.year}{cl.list_suffix or ''}",
                 Description=desc,
                 Contributor=cl.author.replace('AND', 'and').replace('{', '').replace('}', '').split(' and '),
                 Year=cl.year,
@@ -445,7 +444,7 @@ are shown on the map below.
                 for j, (lid, form) in enumerate(sorted(forms.items()), start=1):
                     if form != NA:
                         args.writer.objects['FormTable'].append(dict(
-                            ID='{}-{}'.format(c.id, j),
+                            ID=f'{c.id}-{j}',
                             Form=form,
                             Parameter_ID=c.concepticon_id or '0',
                             Language_ID=lid,
@@ -458,7 +457,7 @@ are shown on the map below.
                     if concept_to_concepticon[sid] and concept_to_concepticon[obj['ID']]:
                         x += 1
                         args.writer.objects['ParameterNetwork'].append(dict(
-                            ID='{}-{}'.format(cl.id, x),
+                            ID=f'{cl.id}-{x}',
                             Contribution_ID=cl.id,
                             Source_Parameter_ID=concept_to_concepticon[sid],
                             Target_Parameter_ID=concept_to_concepticon[obj['ID']],

@@ -31,19 +31,19 @@
         {
             "rdf:about": "https://github.com/concepticon/concepticon-cldf",
             "rdf:type": "prov:Entity",
-            "dc:created": "v3.3.0",
+            "dc:created": "v3.4.0-1-g568d3f1",
             "dc:title": "Repository"
         },
         {
             "rdf:about": "https://github.com/glottolog/glottolog",
             "rdf:type": "prov:Entity",
-            "dc:created": "v5.1",
+            "dc:created": "v5.3",
             "dc:title": "Glottolog"
         },
         {
             "rdf:about": "https://github.com/concepticon/concepticon-data",
             "rdf:type": "prov:Entity",
-            "dc:created": "v3.3.0-26-gad44e5e0",
+            "dc:created": "v3.4.0",
             "dc:title": "Repository"
         }
     ],
@@ -657,7 +657,7 @@
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ParameterNetwork",
             "dc:description": "Rows in this table describe edges in a network of parameters.",
-            "dc:extent": 90402,
+            "dc:extent": 90428,
             "tableSchema": {
                 "columns": [
                     {

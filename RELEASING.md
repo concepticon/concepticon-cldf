@@ -8,7 +8,7 @@
   to fetch source documents from CDSTAR.
 - Re-create the CLDF data running
   ```shell
-  cldfbench makecldf --with-cldfreadme cldfbench_concepticon.py --glottolog-version v5.1
+  cldfbench makecldf --with-cldfreadme cldfbench_concepticon.py --glottolog-version v5.3
   ```
 - Make sure the dataset is valid running
   ```shell

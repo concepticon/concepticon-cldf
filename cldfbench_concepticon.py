@@ -316,7 +316,7 @@ are shown on the map below.
             shutil.copy(p, src_dir / p.name)
             args.writer.objects['MediaTable'].append(dict(
                 ID=ref,
-                Name=v['original'],
+                Name=v['path'].name,
                 Media_Type=v['mimetype'],
                 Download_URL='sources/{}'.format(p.name),
             ))

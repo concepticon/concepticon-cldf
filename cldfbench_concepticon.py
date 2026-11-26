@@ -15,7 +15,8 @@ from pyconcepticon.models import Languoid, CONCEPT_NETWORK_COLUMNS
 from pybtex.database import parse_string
 from rfc3986 import URIReference
 
-# FIXME: The following should probably go into Glottolog.
+# FIXME: The following should probably go into Glottolog, once metadata for dialects becomes more
+# complete.
 COORDS = {
     'southafricanenglish': (-32.47, 25.39),
     'americanenglish': (39.10, -101.80),
@@ -43,8 +44,7 @@ class Dataset(BaseDataset):
         )
 
     def cmd_download(self, args):
-        subprocess.check_call(
-            'git -C {} pull --recurse-submodules'.format(self.dir.resolve()), shell=True)
+        subprocess.check_call(f'git -C {self.dir.resolve()} pull --recurse-submodules', shell=True)
 
     def cmd_readme(self, args):
         desc = """
@@ -296,12 +296,15 @@ are shown on the map below.
         for k, v in api.vocabularies['TAGS'].items():
             args.writer.objects['tags.csv'].append(dict(ID=k, Description=v))
 
-        for ref in api.sources:
+        sources_dir = self.cldf_dir / 'sources'
+        sources_dir.mkdir(parents=True, exist_ok=True)
+        for ref, src in api.sources.items():
+            shutil.copy(src['path'], sources_dir)
             args.writer.objects['MediaTable'].append(dict(
                 ID=ref,
-                Name=api.sources[ref]['original'],
-                Media_Type=api.sources[ref]['mimetype'],
-                Download_URL=api.sources[ref]['url'],
+                Name=src['path'].name,
+                Media_Type=src['mimetype'],
+                Download_URL=f'{sources_dir.name}/{src["path"].name}',
             ))
 
         args.writer.objects['ParameterTable'].append(dict(
@@ -332,7 +335,7 @@ are shown on the map below.
 
         seen = set()
         for row in api.multirelations.raw:
-            rid = '{}-{}-{}'.format(row['SOURCE'], row['RELATION'], row['TARGET'])
+            rid = f"{row['SOURCE']}-{row['RELATION']}-{row['TARGET']}"
             if rid not in seen:
                 args.writer.objects['ParameterNetwork'].append(dict(
                     ID=rid,
@@ -344,7 +347,7 @@ are shown on the map below.
                 ))
                 seen.add(rid)
             if row['RELATION'] in inverses:
-                rid = '{}-{}-{}'.format(row['TARGET'], inverses[row['RELATION']], row['SOURCE'])
+                rid = f"{row['TARGET']}-{inverses[row['RELATION']]}-{row['SOURCE']}"
                 if rid not in seen:
                     args.writer.objects['ParameterNetwork'].append(dict(
                         ID=rid,
@@ -369,7 +372,7 @@ are shown on the map below.
             desc = MarkdownLink.replace(cl.note, functools.partial(biburl, cl.id))
             args.writer.objects['ContributionTable'].append(dict(
                 ID=cl.id,
-                Name='{} {}{}'.format(cl.author, cl.year, cl.list_suffix or ''),
+                Name=f"{cl.author} {cl.year}{cl.list_suffix or ''}",
                 Description=desc,
                 Contributor=cl.author.replace('AND', 'and').replace('{', '').replace('}', '').split(' and '),
                 Year=cl.year,
@@ -387,11 +390,9 @@ are shown on the map below.
                 Alias=cl.alias,
             ))
 
-            #
             # Collect network information!
             network = {n: [] for n in CONCEPT_NETWORK_COLUMNS}
             concept_to_concepticon = {}  # Need to map local concepts to global parameters!
-            #
             for i, c in enumerate(sorted(cl.concepts.values(), key=ckey), start=1):
                 data = collections.OrderedDict(
                     [(k, v) for k, v in c.attributes.items() if v is not None])
@@ -427,7 +428,7 @@ are shown on the map below.
                 for j, (lid, form) in enumerate(sorted(forms.items()), start=1):
                     if form != NA:
                         args.writer.objects['FormTable'].append(dict(
-                            ID='{}-{}'.format(c.id, j),
+                            ID=f'{c.id}-{j}',
                             Form=form,
                             Parameter_ID=c.concepticon_id or '0',
                             Language_ID=lid,
@@ -440,7 +441,7 @@ are shown on the map below.
                     if concept_to_concepticon[sid] and concept_to_concepticon[obj['ID']]:
                         x += 1
                         args.writer.objects['ParameterNetwork'].append(dict(
-                            ID='{}-{}'.format(cl.id, x),
+                            ID=f'{cl.id}-{x}',
                             Contribution_ID=cl.id,
                             Source_Parameter_ID=concept_to_concepticon[sid],
                             Target_Parameter_ID=concept_to_concepticon[obj['ID']],
@@ -460,5 +461,5 @@ are shown on the map below.
                 ))
         zenodo = load(cdata / '.zenodo.json')
         zenodo['keywords'].append('cldf:Wordlist')
-        zenodo['title'] = '{} as CLDF dataset'.format(zenodo['title'])
+        zenodo['title'] = f"{zenodo['title']} as CLDF dataset"
         dump(zenodo, self.dir / '.zenodo.json', indent=2)

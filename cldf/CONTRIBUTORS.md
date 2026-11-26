@@ -9,17 +9,17 @@ Period | Name
 2013-2018 | Michael Cysouw
 2023-2024 | Mathilda van Zantwijk
 2023- | Frederic Blum
-2025- | Alžběta Kučerová 
+2025- | Alžběta Kučerová
 2023- | Carlos Barrientos Ugarte
+2024- | Mira Ahmedović
 2019- | Christoph Rzymski
-2017- | Simon Greenhill
+2017- | Simon J. Greenhill
 2019-2022 | Nathanael Schweikhard
 2019-2021 | Kristina Pianykh
-2020  | Mei-Shin Wu
+2020 | Mei-Shin Wu
 2020-2021 | Carolin Hundt
-2020  | Tiago Tresoldi
+2020 | Tiago Tresoldi
 2015- | Robert Forkel
-
 
 ## Grant information
 
@@ -51,12 +51,13 @@ Many people helped us in many
 ways in assembling the data. They pointed us to missing
 lists (M), provided scans (S), digitized data (D), typed off
 and corrected concept lists (C), provided translations (T),
-linked concept lists (L), provided corrections of concept definitions and concept linkings (P), or gave important advice (A), and (G) contributed new data via the GitHub-Workflow, or helped in reviewing new submissions (R). 
+linked concept lists (L), provided corrections of concept definitions and concept linkings (P), or gave important advice (A), and (G) contributed new data via the GitHub-Workflow, or helped in reviewing new submissions (R).
 
 For all this help, we are very grateful and express our gratitude.
 
 Name | Contribution | Version |
 --- | --- | --- |
+Abishek Stephen | G | 3.5
 Alexander D. Smith | A | 3.2
 Alexei Kassian | D | 1.0
 Andreea Calude | D | 1.1
@@ -110,7 +111,7 @@ Mateus Alves Motta | CTLG | 2.6
 Maurizio Serva | MD | 1.1
 Mei-Shin Wu | CTLG | 1.2, 2.0, 2.1, 2.2
 Michael Dunn | G | 1.1
-Ahmedovic, Mira | CLPG | 3.3 
+Mira Ahmedović | CLPG | 3.3 
 Muhammad Zakaria | L | 2.4
 Natalia Morozowa | DCPTL | 2.0, 2.1, 2.2
 Nathan Hill | MSDP | 1.1, 2.3
@@ -118,6 +119,7 @@ Nathan Statezni | D | 2.4
 Nicholas Evans | A | 1.0
 Panayiotis Pappas | MD | 3.1
 Paul Heggarty | D | 1.0
+Paula Heinrich | LGR | 3.5
 Quentin Atkinson | MD | 1.1
 Riccardo Rost | CLP | 3.3
 Robert Blust | D | 1.0
